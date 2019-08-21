@@ -5,7 +5,7 @@ class EntriesComponent extends React.Component {
         return (
             <ul>
                 {
-                    this.data.lenght <= 0
+                    this.data.length <= 0
                         ? 'NO DB ENTRIES'
                         : this.data.map((element) => (
                             <li style={{ padding: '10px' }} key={ this.data.message }>

@@ -8,7 +8,7 @@ class App extends Component {
     data: [],
     id: 0,
     message: null,
-    intervalIsSet: false,
+    intervalIsSet: 0,
     idToDelete: null,
     idToUpdate: null,
     objectToUpdate: null,
@@ -18,12 +18,14 @@ class App extends Component {
     this.getDataFromDb();
     if (!this.state.intervalIsSet) {
       let interval = setInterval(this.getDataFromDb, 1000);
+      console.log(interval);
       this.setState({ intervalIsSet: interval });
     }
   }
 
   componentWillUnmount() {
     if (this.state.intervalIsSet) {
+      console.log(this.state.intervalIsSet);
       clearInterval(this.state.intervalIsSet);
       this.setState({ intervalIsSet: null });
     }
@@ -35,7 +37,7 @@ class App extends Component {
       .then((res) => this.setState({ data: res.data }));
   };
 
-  putDataToDB = (message) => {
+  putDataToDB = (message: string) => {
     let currentIds = this.state.data.map((data) => data.id);
     let idToBeAdded = 0;
     while (currentIds.includes(idToBeAdded)) {
@@ -48,7 +50,7 @@ class App extends Component {
     });
   };
 
-  deleteFromDB = (idTodelete) => {
+  deleteFromDB = (idTodelete: number) => {
     parseInt(idTodelete);
     let objIdToDelete = null;
     this.state.data.forEach((dat) => {
