@@ -1,6 +1,7 @@
-// @ts-nocheck
 import React, { Component } from 'react';
 import axios from 'axios'
+import { Entries } from './components/Entries';
+
 
 class App extends Component {
   state = {
@@ -51,7 +52,7 @@ class App extends Component {
     parseInt(idTodelete);
     let objIdToDelete = null;
     this.state.data.forEach((dat) => {
-      if (dat.id == idTodelete) {
+      if (dat.id === idTodelete) {
         objIdToDelete = dat._id;
       }
     });
@@ -67,7 +68,7 @@ class App extends Component {
     let objIdToUpdate = null;
     parseInt(idToUpdate);
     this.state.data.forEach((dat) => {
-      if (dat.id == idToUpdate) {
+      if (dat.id === idToUpdate) {
         objIdToUpdate = dat._id;
       }
     });
@@ -83,17 +84,7 @@ class App extends Component {
 
     return (
       <div>
-        <ul>
-          { data.length <= 0
-            ? 'NO DB ENTRIES YET'
-            : data.map((dat) => (
-              <li style={ { padding: '10px' } } key={ data.message } >
-                <span style={ { color: 'gray' } }> id: </span> { dat.id } <br />
-                <span style={ { color: 'gray' } }> data: </span> { dat.message }
-              </li>
-            ))
-          }
-        </ul>
+        <Entries/>
         <div style={ { padding: '10px' } }>
           <input
             type="text"
