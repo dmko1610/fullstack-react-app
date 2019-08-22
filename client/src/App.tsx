@@ -1,33 +1,63 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Entries } from './components/Entries';
+// import { Entries } from './components/Entries';
 
+type Data = {
+  id: number,
+  message: string,
+}
 
-class App extends Component {
-  state = {
-    data: [],
-    id: 0,
-    message: null,
-    intervalIsSet: 0,
-    idToDelete: null,
-    idToUpdate: null,
-    objectToUpdate: null,
-  };
+interface State {
+  data: Data,
+  id: number,
+  message: string,
+  intervalIsSet?: NodeJS.Timeout,
+  idToDelete: number,
+  idToUpdate: number,
+  objectToUpdate: Object
+}
+
+interface Props { }
+
+class App extends Component<Props, State> {
+
+  state: State;
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      data: {
+        id: 0,
+        message: ''
+      },
+      id: 0,
+      message: '',
+      intervalIsSet: setInterval(this.getDataFromDb, 1),
+      idToDelete: 0,
+      idToUpdate: 0,
+      objectToUpdate: [],
+    };
+  }
 
   componentDidMount() {
     this.getDataFromDb();
     if (!this.state.intervalIsSet) {
       let interval = setInterval(this.getDataFromDb, 1000);
-      console.log(interval);
-      this.setState({ intervalIsSet: interval });
+      this.setState({
+        ...this.state,
+        intervalIsSet: interval
+      });
     }
   }
 
   componentWillUnmount() {
     if (this.state.intervalIsSet) {
-      console.log(this.state.intervalIsSet);
       clearInterval(this.state.intervalIsSet);
-      this.setState({ intervalIsSet: null });
+      this.setState({
+        ...this.state,
+        intervalIsSet: undefined
+      });
     }
   }
 
@@ -38,11 +68,13 @@ class App extends Component {
   };
 
   putDataToDB = (message: string) => {
-    let currentIds = this.state.data.map((data) => data.id);
+    console.log(Object.values(this.state.data));
+    // Object.assign(this.state.data, { id: })
+    // let currentIds = this.state.data.map((data: Data) => data.id);
     let idToBeAdded = 0;
-    while (currentIds.includes(idToBeAdded)) {
-      ++idToBeAdded;
-    }
+    // while (currentIds.includes(idToBeAdded)) {
+    //   ++idToBeAdded;
+    // }
 
     axios.post('http://localhost:3001/api/putData', {
       id: idToBeAdded,
@@ -51,13 +83,13 @@ class App extends Component {
   };
 
   deleteFromDB = (idTodelete: number) => {
-    parseInt(idTodelete);
+    // parseInt(idTodelete);
     let objIdToDelete = null;
-    this.state.data.forEach((dat) => {
-      if (dat.id === idTodelete) {
-        objIdToDelete = dat._id;
-      }
-    });
+    // this.state.data.forEach((dat: Data) => {
+    //   if (dat.id === idTodelete) {
+    //     objIdToDelete = dat._id;
+    //   }
+    // });
 
     axios.delete('http://localhost:3001/api/deleteData', {
       data: {
@@ -66,14 +98,14 @@ class App extends Component {
     });
   };
 
-  updateDB = (idToUpdate, updateToApply) => {
+  updateDB = (idToUpdate: number, updateToApply: string) => {
     let objIdToUpdate = null;
-    parseInt(idToUpdate);
-    this.state.data.forEach((dat) => {
-      if (dat.id === idToUpdate) {
-        objIdToUpdate = dat._id;
-      }
-    });
+    // parseInt(idToUpdate);
+    // this.state.data.forEach((dat: Data) => {
+    //   if (dat.id === idToUpdate) {
+    //     objIdToUpdate = dat._id;
+    //   }
+    // });
 
     axios.post('http://localhost:3001/api/updateData', {
       id: objIdToUpdate,
@@ -83,11 +115,27 @@ class App extends Component {
 
   render() {
     const { data } = this.state;
+    // console.log("data inside render method");
+    // console.log(data);    
+    Object.values(data).map((element) => {
+      console.log(element);
+    });
 
     return (
       <div>
-        <Entries/>
-        <div style={ { padding: '10px' } }>
+        <ul>
+          {
+            !data
+              ? 'NO DB ENTRIES'
+              : Object.values(data).map((element) => (
+                <li style={ { padding: '10px' } } key={ data.message }>
+                  <span style={ { color: 'gray' } }> id: </span> { element.id } <br />
+                  <span style={ { color: 'gray' } }></span> { element.message }
+                </li>
+              ))
+          }
+        </ul>
+        {/* <div style={ { padding: '10px' } }>
           <input
             type="text"
             onChange={ (e) => this.setState({ message: e.target.value }) }
@@ -120,14 +168,14 @@ class App extends Component {
             style={ { width: '200px' } }
             onChange={ (e) => this.setState({ updateToApply: e.target.value }) }
             placeholder="put new value of the item here"
-          />
-          <button
+          /> */}
+        {/* <button
             onClick={ () =>
               this.updateDB(this.state.idToUpdate, this.state.updateToApply)
             }>
             UPDATE
-          </button>
-        </div>
+          </button> */}
+        {/* </div> */ }
       </div>
     )
   }

@@ -4,7 +4,7 @@ class EntriesComponent extends React.Component {
     public render() {
         return (
             <ul>
-                {
+                {/* {
                     this.data.length <= 0
                         ? 'NO DB ENTRIES'
                         : this.data.map((element) => (
@@ -13,7 +13,7 @@ class EntriesComponent extends React.Component {
                                 <span style={{ color: 'gray' }}></span> { element.message }
                             </li>
                         ))
-                }
+                } */}
             </ul>
         )
     }
