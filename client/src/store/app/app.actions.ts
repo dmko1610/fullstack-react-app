@@ -1,4 +1,4 @@
-import { createAction } from '../action-helpers';
+import { ActionsUnion, createAction } from '../action-helpers';
 import {create} from "domain";
 
 export const CLEAR_INTERVAL = '[app] CLEAR_INTERVAL';
@@ -14,3 +14,10 @@ export const Actions = {
     deleteDataFromDb: () => createAction(DELETE_DATA_FROM_DB),
     updateDbData: () =>  createAction(UPDATE_DB_DATA)
 }
+
+export const Thunks = {
+
+}
+
+export type Actions = ActionsUnion<typeof Actions>;
+export type Thunks = ActionsUnion<typeof Thunks>;
