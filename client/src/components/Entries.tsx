@@ -4,7 +4,8 @@ class EntriesComponent extends React.Component {
     public render() {
         return (
             <ul>
-                {/* {
+                {
+                    /* {
                     this.data.length <= 0
                         ? 'NO DB ENTRIES'
                         : this.data.map((element) => (
