@@ -1,0 +1,28 @@
+.idea
+node_modules
+package-lock.json
+backend/node_modules
+backend/package-lock.json
+client/node_modules
+client/package-lock.json
+
+# dependencies
+client/.pnp
+client/.pnp.js
+
+# testing
+client/coverage
+
+# production
+clien/build
+
+# misc
+clien/.DS_Store
+clien/.env.local
+clien/.env.development.local
+clien/.env.test.local
+clien/.env.production.local
+
+clien/npm-debug.log*
+clien/yarn-debug.log*
+clien/yarn-error.log*
