@@ -15,7 +15,7 @@ interface State {
     intervalIsSet?: NodeJS.Timeout,
     idToDelete: number,
     idToUpdate: number,
-    objectToUpdate: Object
+    updateToApply: string
 }
 
 interface Props {
@@ -39,7 +39,7 @@ class App extends Component<Props, State> {
             intervalIsSet: setInterval(this.getDataFromDb, 1000),
             idToDelete: 0,
             idToUpdate: 0,
-            objectToUpdate: [],
+            updateToApply: '',
         };
     }
 
@@ -77,13 +77,12 @@ class App extends Component<Props, State> {
     };
 
     deleteFromDB = (idTodelete: number) => {
-        // parseInt(idTodelete);
         let objIdToDelete = null;
-        // this.state.data.forEach((dat: Data) => {
-        //   if (dat.id === idTodelete) {
-        //     objIdToDelete = dat._id;
-        //   }
-        // });
+        Object.values(this.state.data).forEach((dat: any) => {
+            if (dat.id === idTodelete) {
+                objIdToDelete = dat._id;
+            }
+        });
 
         axios.delete('http://localhost:3001/api/deleteData', {
             data: {
@@ -95,11 +94,11 @@ class App extends Component<Props, State> {
     updateDB = (idToUpdate: number, updateToApply: string) => {
         let objIdToUpdate = null;
         // parseInt(idToUpdate);
-        // this.state.data.forEach((dat: Data) => {
-        //   if (dat.id === idToUpdate) {
-        //     objIdToUpdate = dat._id;
-        //   }
-        // });
+        Object.values(this.state.data).forEach((dat: any) => {
+            if (dat.id === idToUpdate) {
+                objIdToUpdate = dat._id;
+            }
+        });
 
         axios.post('http://localhost:3001/api/updateData', {
             id: objIdToUpdate,
@@ -134,41 +133,41 @@ class App extends Component<Props, State> {
                         ADD
                     </button>
                 </div>
-                {/*
-                <div style={ { padding: '10px' } }>
-                  <input
-                    type="text"
-                    style={ { width: '200px' } }
-                    onChange={ (e) => this.setState({ idToDelete: e.target.value }) }
-                    placeholder="put id of item to delete here"
-                  />
-                  <button onClick={ () => this.deleteFromDB(this.state.idToDelete) }>
-                    DELETE
-                  </button>
+
+                <div style={{padding: '10px'}}>
+                    <input
+                        type="text"
+                        style={{width: '200px'}}
+                        onChange={(e) => this.setState({idToDelete: parseInt(e.target.value)})}
+                        placeholder="put id of item to delete here"
+                    />
+                    <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
+                        DELETE
+                    </button>
                 </div>
-                <div style={ { padding: '10px' } }>
-                  <input
-                    type="text"
-                    style={ { width: '200px' } }
-                    onChange={ (e) => this.setState({ idToUpdate: e.target.value }) }
-                    placeholder="id of item to update here"
-                  />
-                  <input
-                    type="text"
-                    style={ { width: '200px' } }
-                    onChange={ (e) => this.setState({ updateToApply: e.target.value }) }
-                    placeholder="put new value of the item here"
-                  /> */}
-                {/* <button
-            onClick={ () =>
-              this.updateDB(this.state.idToUpdate, this.state.updateToApply)
-            }>
-            UPDATE
-          </button> */}
-                {/* </div> */}
+
+                <div style={{padding: '10px'}}>
+                    <input
+                        type="text"
+                        style={{width: '200px'}}
+                        onChange={(e) => this.setState({idToUpdate: parseInt(e.target.value)})}
+                        placeholder="id of item to update here"
+                    />
+                    <input
+                        type="text"
+                        style={{width: '200px'}}
+                        onChange={(e) => this.setState({updateToApply: e.target.value})}
+                        placeholder="put new value of the item here"
+                    />
+                    <button
+                        onClick={() =>
+                            this.updateDB(this.state.idToUpdate, this.state.updateToApply)
+                        }>
+                        UPDATE
+                    </button>
+                </div>
             </div>
         )
     }
 }
-
 export default App;
