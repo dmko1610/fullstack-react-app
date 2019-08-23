@@ -65,13 +65,11 @@ class App extends Component<Props, State> {
 
     putDataToDB = (message: string) => {
         console.log(Object.values(this.state.data));
-        // Object.assign(this.state.data, { id: })
-        // let currentIds = this.state.data.map((data: Data) => data.id);
+        let currentIds = Object.values(this.state.data).map((data: any) => data.id);
         let idToBeAdded = 0;
-        // while (currentIds.includes(idToBeAdded)) {
-        //   ++idToBeAdded;
-        // }
-
+        while (currentIds.includes(idToBeAdded)) {
+            ++idToBeAdded;
+        }
         axios.post('http://localhost:3001/api/putData', {
             id: idToBeAdded,
             message: message,
@@ -126,40 +124,41 @@ class App extends Component<Props, State> {
                             ))
                     }
                 </ul>
-                {/* <div style={ { padding: '10px' } }>
-          <input
-            type="text"
-            onChange={ (e) => this.setState({ message: e.target.value }) }
-            placeholder="add something in the database"
-            style={ { width: '200px' } } />
-          <button onClick={ () => this.putDataToDB(this.state.message) }>
-            ADD
-          </button>
-        </div>
-        <div style={ { padding: '10px' } }>
-          <input
-            type="text"
-            style={ { width: '200px' } }
-            onChange={ (e) => this.setState({ idToDelete: e.target.value }) }
-            placeholder="put id of item to delete here"
-          />
-          <button onClick={ () => this.deleteFromDB(this.state.idToDelete) }>
-            DELETE
-          </button>
-        </div>
-        <div style={ { padding: '10px' } }>
-          <input
-            type="text"
-            style={ { width: '200px' } }
-            onChange={ (e) => this.setState({ idToUpdate: e.target.value }) }
-            placeholder="id of item to update here"
-          />
-          <input
-            type="text"
-            style={ { width: '200px' } }
-            onChange={ (e) => this.setState({ updateToApply: e.target.value }) }
-            placeholder="put new value of the item here"
-          /> */}
+                <div style={{padding: '10px'}}>
+                    <input
+                        type="text"
+                        onChange={(e) => this.setState({message: e.target.value})}
+                        placeholder="add something in the database"
+                        style={{width: '200px'}}/>
+                    <button onClick={() => this.putDataToDB(this.state.message)}>
+                        ADD
+                    </button>
+                </div>
+                {/*
+                <div style={ { padding: '10px' } }>
+                  <input
+                    type="text"
+                    style={ { width: '200px' } }
+                    onChange={ (e) => this.setState({ idToDelete: e.target.value }) }
+                    placeholder="put id of item to delete here"
+                  />
+                  <button onClick={ () => this.deleteFromDB(this.state.idToDelete) }>
+                    DELETE
+                  </button>
+                </div>
+                <div style={ { padding: '10px' } }>
+                  <input
+                    type="text"
+                    style={ { width: '200px' } }
+                    onChange={ (e) => this.setState({ idToUpdate: e.target.value }) }
+                    placeholder="id of item to update here"
+                  />
+                  <input
+                    type="text"
+                    style={ { width: '200px' } }
+                    onChange={ (e) => this.setState({ updateToApply: e.target.value }) }
+                    placeholder="put new value of the item here"
+                  /> */}
                 {/* <button
             onClick={ () =>
               this.updateDB(this.state.idToUpdate, this.state.updateToApply)
