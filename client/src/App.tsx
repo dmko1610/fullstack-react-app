@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios'
+import {clearInterval} from "./store/app/app.selectors";
 // import { Entries } from './components/Entries';
 
 type Data = {
@@ -10,7 +11,6 @@ type Data = {
 
 interface State {
     data: Data,
-    id: number,
     message: string,
     intervalIsSet?: NodeJS.Timeout,
     idToDelete: number,
@@ -19,6 +19,8 @@ interface State {
 }
 
 interface Props {
+    clearInterval: any;
+    intervalIsSet?: NodeJS.Timeout,
 }
 
 class App extends Component<Props, State> {
@@ -34,13 +36,16 @@ class App extends Component<Props, State> {
                 message: '',
                 _id: ''
             },
-            id: 0,
             message: '',
-            intervalIsSet: setInterval(this.getDataFromDb, 1000),
+            // intervalIsSet: setInterval(this.getDataFromDb, 1000),
             idToDelete: 0,
             idToUpdate: 0,
             updateToApply: '',
         };
+    }
+
+    setUpInterval = () => {
+        this.props.clearInterval();
     }
 
     componentDidMount() {
@@ -49,7 +54,7 @@ class App extends Component<Props, State> {
 
     componentWillUnmount() {
         if (this.state.intervalIsSet) {
-            clearInterval(this.state.intervalIsSet);
+            // clearInterval(this.state.intervalIsSet);
             this.setState({
                 ...this.state,
                 intervalIsSet: undefined
