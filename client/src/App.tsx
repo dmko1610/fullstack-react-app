@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios'
-import {clearInterval} from "./store/app/app.selectors";
+import {Provider} from "react-redux";
 // import { Entries } from './components/Entries';
 
 type Data = {
@@ -46,7 +46,7 @@ class App extends Component<Props, State> {
 
     setUpInterval = () => {
         this.props.clearInterval();
-    }
+    };
 
     componentDidMount() {
         this.getDataFromDb();
@@ -115,10 +115,10 @@ class App extends Component<Props, State> {
         const {data} = this.state;
 
         return (
-            <div>
-                <ul>
-                    {
-                        !data
+            <Provider store={store}>
+                <div>
+                    <ul>
+                        {!data
                             ? 'NO DB ENTRIES'
                             : Object.values(data).map((element: any) => (
                                 <li style={{padding: '10px'}} key={data._id}>
@@ -126,53 +126,55 @@ class App extends Component<Props, State> {
                                     <span style={{color: 'gray'}}> message: </span> {element.message}
                                 </li>
                             ))
-                    }
-                </ul>
-                <div style={{padding: '10px'}}>
-                    <input
-                        type="text"
-                        onChange={(e) => this.setState({message: e.target.value})}
-                        placeholder="add something in the database"
-                        style={{width: '200px'}}/>
-                    <button onClick={() => this.putDataToDB(this.state.message)}>
-                        ADD
-                    </button>
-                </div>
+                        }
+                    </ul>
+                    <div style={{padding: '10px'}}>
+                        <input
+                            type="text"
+                            onChange={(e) => this.setState({message: e.target.value})}
+                            placeholder="add something in the database"
+                            style={{width: '200px'}}/>
+                        <button onClick={() => this.putDataToDB(this.state.message)}>
+                            ADD
+                        </button>
+                    </div>
 
-                <div style={{padding: '10px'}}>
-                    <input
-                        type="text"
-                        style={{width: '200px'}}
-                        onChange={(e) => this.setState({idToDelete: parseInt(e.target.value)})}
-                        placeholder="put id of item to delete here"
-                    />
-                    <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
-                        DELETE
-                    </button>
-                </div>
+                    <div style={{padding: '10px'}}>
+                        <input
+                            type="text"
+                            style={{width: '200px'}}
+                            onChange={(e) => this.setState({idToDelete: parseInt(e.target.value)})}
+                            placeholder="put id of item to delete here"
+                        />
+                        <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
+                            DELETE
+                        </button>
+                    </div>
 
-                <div style={{padding: '10px'}}>
-                    <input
-                        type="text"
-                        style={{width: '200px'}}
-                        onChange={(e) => this.setState({idToUpdate: parseInt(e.target.value)})}
-                        placeholder="id of item to update here"
-                    />
-                    <input
-                        type="text"
-                        style={{width: '200px'}}
-                        onChange={(e) => this.setState({updateToApply: e.target.value})}
-                        placeholder="put new value of the item here"
-                    />
-                    <button
-                        onClick={() =>
-                            this.updateDB(this.state.idToUpdate, this.state.updateToApply)
-                        }>
-                        UPDATE
-                    </button>
+                    <div style={{padding: '10px'}}>
+                        <input
+                            type="text"
+                            style={{width: '200px'}}
+                            onChange={(e) => this.setState({idToUpdate: parseInt(e.target.value)})}
+                            placeholder="id of item to update here"
+                        />
+                        <input
+                            type="text"
+                            style={{width: '200px'}}
+                            onChange={(e) => this.setState({updateToApply: e.target.value})}
+                            placeholder="put new value of the item here"
+                        />
+                        <button
+                            onClick={() =>
+                                this.updateDB(this.state.idToUpdate, this.state.updateToApply)
+                            }>
+                            UPDATE
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </Provider>
         )
     }
 }
+
 export default App;
