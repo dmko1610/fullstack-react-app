@@ -1,20 +1,6 @@
 import * as appActions from './app.actions';
-import {CLEAR_INTERVAL} from './app.actions';
-
-export type Data = {
-    id: number,
-    _id: string,
-    message: string,
-}
-
-export interface AppState {
-    data: Data,
-    message: string,
-    intervalIsSet?: NodeJS.Timeout,
-    idToDelete: number,
-    idToUpdate: number,
-    updateToApply: string
-}
+import {CLEAR_INTERVAL, FETCH_DATA} from './app.types';
+import {AppState} from "./app.types";
 
 const initialState: AppState = {
     data: {
@@ -32,9 +18,14 @@ const initialState: AppState = {
 
 export const appReducer = (
     state = initialState,
-    action: appActions.Actions
+    action: appActions.ActionsWithPayload
 ): AppState => {
     switch (action.type) {
+        case FETCH_DATA:
+            return {
+                ...state,
+                data: action.payload
+            };
         case CLEAR_INTERVAL:
             return {
                 ...state,

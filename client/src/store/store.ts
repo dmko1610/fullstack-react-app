@@ -1,14 +1,24 @@
-import {applyMiddleware, createStore} from "redux";
+import {applyMiddleware, compose, createStore} from "redux";
 import thunk from "redux-thunk";
 import {reducer} from './reducer'
 
-const middleware = applyMiddleware(thunk);
-
-export const store = createStore(reducer, {}, middleware);
-// @ts-ignore
-if (module.hot) {
-    // @ts-ignore
-    module.hot.accept('./reducer', () => {
-        store.replaceReducer(require('./reducer').default);
-    });
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
 }
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const middleware = [thunk];
+
+const initialState = {};
+
+export const store = createStore(
+    reducer,
+    initialState,
+    compose(
+        applyMiddleware(...middleware),
+        composeEnhancers
+    )
+);

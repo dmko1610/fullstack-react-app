@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios'
 import {Provider} from "react-redux";
-// import { Entries } from './components/Entries';
+import {connect} from 'react-redux';
+import {store} from "./store";
+// import {fetchData} from './store/app/app.actions'
 
 type Data = {
     id: number,
@@ -19,8 +21,6 @@ interface State {
 }
 
 interface Props {
-    clearInterval: any;
-    intervalIsSet?: NodeJS.Timeout,
 }
 
 class App extends Component<Props, State> {
@@ -42,14 +42,6 @@ class App extends Component<Props, State> {
             idToUpdate: 0,
             updateToApply: '',
         };
-    }
-
-    setUpInterval = () => {
-        this.props.clearInterval();
-    };
-
-    componentDidMount() {
-        this.getDataFromDb();
     }
 
     componentWillUnmount() {
@@ -128,7 +120,7 @@ class App extends Component<Props, State> {
                             ))
                         }
                     </ul>
-                    <div style={{padding: '10px'}}>
+                  {/*  <div style={{padding: '10px'}}>
                         <input
                             type="text"
                             onChange={(e) => this.setState({message: e.target.value})}
@@ -170,7 +162,7 @@ class App extends Component<Props, State> {
                             }>
                             UPDATE
                         </button>
-                    </div>
+                    </div>*/}
                 </div>
             </Provider>
         )
