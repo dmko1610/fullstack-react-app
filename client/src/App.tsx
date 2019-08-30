@@ -3,21 +3,10 @@ import axios from 'axios'
 import {Provider} from "react-redux";
 import {connect} from 'react-redux';
 import {store} from "./store";
-// import {fetchData} from './store/app/app.actions'
-
-type Data = {
-    id: number,
-    _id: string,
-    message: string,
-}
+import {Thunks} from './store/app'
+import {Entries} from "./components/Entries";
 
 interface State {
-    data: Data,
-    message: string,
-    intervalIsSet?: NodeJS.Timeout,
-    idToDelete: number,
-    idToUpdate: number,
-    updateToApply: string
 }
 
 interface Props {
@@ -25,26 +14,7 @@ interface Props {
 
 class App extends Component<Props, State> {
 
-    state: State;
-
-    constructor(props: Props) {
-        super(props);
-
-        this.state = {
-            data: {
-                id: 0,
-                message: '',
-                _id: ''
-            },
-            message: '',
-            // intervalIsSet: setInterval(this.getDataFromDb, 1000),
-            idToDelete: 0,
-            idToUpdate: 0,
-            updateToApply: '',
-        };
-    }
-
-    componentWillUnmount() {
+    /*componentWillUnmount() {
         if (this.state.intervalIsSet) {
             // clearInterval(this.state.intervalIsSet);
             this.setState({
@@ -52,7 +22,7 @@ class App extends Component<Props, State> {
                 intervalIsSet: undefined
             });
         }
-    }
+    }*/
 
     getDataFromDb = () => {
         fetch('http://localhost:3001/api/getData')
@@ -104,22 +74,10 @@ class App extends Component<Props, State> {
     };
 
     render() {
-        const {data} = this.state;
-
         return (
             <Provider store={store}>
                 <div>
-                    <ul>
-                        {!data
-                            ? 'NO DB ENTRIES'
-                            : Object.values(data).map((element: any) => (
-                                <li style={{padding: '10px'}} key={data._id}>
-                                    <span style={{color: 'gray'}}> id: </span> {element.id} <br/>
-                                    <span style={{color: 'gray'}}> message: </span> {element.message}
-                                </li>
-                            ))
-                        }
-                    </ul>
+                    <Entries/>
                   {/*  <div style={{padding: '10px'}}>
                         <input
                             type="text"
