@@ -4,7 +4,7 @@ import {Provider} from "react-redux";
 import {connect} from 'react-redux';
 import {store} from "./store";
 import {Thunks} from './store/app'
-import {Entries} from "./components/Entries";
+import {Entries} from './components/Entries';
 
 interface State {
 }
@@ -24,7 +24,7 @@ class App extends Component<Props, State> {
         }
     }*/
 
-    getDataFromDb = () => {
+  /*  getDataFromDb = () => {
         fetch('http://localhost:3001/api/getData')
             .then((data) => data.json())
             .then((res) => this.setState({data: res.data}));
@@ -71,7 +71,7 @@ class App extends Component<Props, State> {
             id: objIdToUpdate,
             update: {message: updateToApply},
         });
-    };
+    };*/
 
     render() {
         return (

@@ -4,7 +4,8 @@ import {
     ADD_DATA_TO_DB,
     CLEAR_INTERVAL,
     DELETE_DATA_FROM_DB,
-    FETCH_DATA, PAYLOAD_DATA,
+    FETCH_DATA,
+    PAYLOAD_DATA,
     SET_DATA_FROM_DB,
     UPDATE_DB_DATA
 } from "./app.types";
@@ -19,7 +20,7 @@ export const ActionsWithPayload = {
 };
 
 export const Thunks = {
-    fetchData: () => {
+    getData: () => {
         return (dispatch: Dispatch) => {
             // fetch('http://localhost:3001/api/getData')
             fetch('https://jsonplaceholder.typicode.com/posts')
@@ -28,34 +29,7 @@ export const Thunks = {
                     type: FETCH_DATA,
                     payload: data
                 }));
-            dispatch(ActionsWithPayload.fetchData());
         }
-    },
-
-    clearInterval: () => {
-        return (dispatch: Dispatch) => {
-            dispatch(ActionsWithPayload.clearInterval());
-        };
-    },
-    setDataFromDb: () => {
-        return (dispatch: Dispatch) => {
-            dispatch(ActionsWithPayload.setDataFromDb());
-        };
-    },
-    addDataToDb: () => {
-        return (dispatch: Dispatch) => {
-            dispatch(ActionsWithPayload.addDataToDb());
-        };
-    },
-    deleteDataFromDb: () => {
-        return (dispatch: Dispatch) => {
-            dispatch(ActionsWithPayload.deleteDataFromDb());
-        };
-    },
-    updateDbData: () => {
-        return (dispatch: Dispatch) => {
-            dispatch(ActionsWithPayload.updateDbData());
-        };
     }
 };
 
