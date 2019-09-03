@@ -1,5 +1,5 @@
 import * as appActions from './app.actions';
-import {AppState, CLEAR_INTERVAL, FINISH_FETCH_DATA} from './app.types';
+import {AppState, FETCH_DATA} from './app.types';
 
 const initialState: AppState = {
     data: {
@@ -9,8 +9,6 @@ const initialState: AppState = {
     },
     datas: [],
     message: '',
-    intervalIsSet: setInterval(() => {
-    }, 1000),
     idToDelete: 0,
     idToUpdate: 0,
     updateToApply: ''
@@ -21,15 +19,10 @@ export const appReducer = (
     action: appActions.ActionsWithPayload
 ): AppState => {
     switch (action.type) {
-        case FINISH_FETCH_DATA:
+        case FETCH_DATA:
             return {
                 ...state,
                 datas: action.payload
-            };
-        case CLEAR_INTERVAL:
-            return {
-                ...state,
-                intervalIsSet: undefined
             };
         default:
             return state;

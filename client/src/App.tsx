@@ -13,23 +13,7 @@ interface Props {
 }
 
 class App extends Component<Props, State> {
-
-    /*componentWillUnmount() {
-        if (this.state.intervalIsSet) {
-            // clearInterval(this.state.intervalIsSet);
-            this.setState({
-                ...this.state,
-                intervalIsSet: undefined
-            });
-        }
-    }*/
-
-  /*  getDataFromDb = () => {
-        fetch('http://localhost:3001/api/getData')
-            .then((data) => data.json())
-            .then((res) => this.setState({data: res.data}));
-    };
-
+  /*
     putDataToDB = (message: string) => {
         console.log(Object.values(this.state.data));
         let currentIds = Object.values(this.state.data).map((data: any) => data.id);

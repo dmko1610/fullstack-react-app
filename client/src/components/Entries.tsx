@@ -9,6 +9,7 @@ import {getDataFromDb} from "../store/app/app.selectors";
 interface IProps {
     getData?: any;
     datas: Data[];
+    unfocusPage?: any;
 }
 
 interface IState {
@@ -19,6 +20,10 @@ class EntriesComponent extends React.Component<IProps, IState> {
 
     componentDidMount(): void {
         this.props.getData && this.props.getData();
+    }
+
+    componentWillUnmount(): void {
+        this.props.unfocusPage && this.props.unfocusPage();
     }
 
     public render() {
@@ -40,7 +45,7 @@ class EntriesComponent extends React.Component<IProps, IState> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-    datas: getDataFromDb(state)
+    datas: getDataFromDb(state),
 });
 
 const mapDispatchToProps = (dispatch: DispatchThunk) => ({
