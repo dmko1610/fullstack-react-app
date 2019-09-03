@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {Thunks} from "../store/app";
-import {ActionsWithPayload} from "../store/app";
 import {connect} from "react-redux";
 import {AppState, Data} from "../store/app/app.types";
 import {DispatchThunk} from "../store";
@@ -25,7 +24,7 @@ class EntriesComponent extends React.Component<IProps, IState> {
     public render() {
         return (
             <ul>
-                {!this.state.data
+                {!this.props.data
                     ? 'NO DB ENTRIES'
                     : Object.values(this.props.data).map((element: any) => (
                         <li style={{padding: '10px'}} key={this.state.data._id}>
@@ -44,9 +43,9 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: DispatchThunk) => ({
-   getData: () => {
-       dispatch(Thunks.getData());
-   }
+    getData: () => {
+        dispatch(Thunks.getData());
+    }
 });
 
 export const Entries = connect(mapStateToProps, mapDispatchToProps)(EntriesComponent);
