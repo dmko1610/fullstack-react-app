@@ -1,12 +1,15 @@
 import * as React from 'react';
 import {Thunks} from "../store/app";
+import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {AppState, Data} from "../store/app/app.types";
-import {DispatchThunk} from "../store";
+import {DispatchThunk, RootState} from "../store";
+import {getDataFromDb} from "../store/app/app.selectors";
 
 
 interface IProps {
     getData?: any;
+    finishFetching?: any;
     data: Data;
 }
 
@@ -22,6 +25,7 @@ class EntriesComponent extends React.Component<IProps, IState> {
     }
 
     public render() {
+        console.log(this.props);
         return (
             <ul>
                 {!this.props.data
@@ -38,8 +42,8 @@ class EntriesComponent extends React.Component<IProps, IState> {
     }
 }
 
-const mapStateToProps = (state: AppState) => ({
-    data: state.data
+const mapStateToProps = (state: RootState) => ({
+    data: getDataFromDb(state)
 });
 
 const mapDispatchToProps = (dispatch: DispatchThunk) => ({

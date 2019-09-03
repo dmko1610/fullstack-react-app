@@ -1,6 +1,5 @@
 import * as appActions from './app.actions';
-import {CLEAR_INTERVAL, FETCH_DATA} from './app.types';
-import {AppState} from "./app.types";
+import {AppState, CLEAR_INTERVAL, FINISH_FETCH_DATA} from './app.types';
 
 const initialState: AppState = {
     data: {
@@ -21,7 +20,7 @@ export const appReducer = (
     action: appActions.ActionsWithPayload
 ): AppState => {
     switch (action.type) {
-        case FETCH_DATA:
+        case FINISH_FETCH_DATA:
             return {
                 ...state,
                 data: action.payload

@@ -3,7 +3,7 @@ import {RootState} from "../store.types"
 
 export const getApp = (state: RootState) => state.app;
 
-export const clearInterval = createSelector(
+export const getDataFromDb = createSelector(
     getApp,
-    appState => appState.intervalIsSet,
+    appState => appState.data
 );

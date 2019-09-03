@@ -3,15 +3,17 @@ import {Dispatch} from 'redux';
 import {
     ADD_DATA_TO_DB,
     CLEAR_INTERVAL,
+    Data,
     DELETE_DATA_FROM_DB,
-    FETCH_DATA,
-    PAYLOAD_DATA,
+    FINISH_FETCH_DATA,
     SET_DATA_FROM_DB,
+    START_FETCH_DATA,
     UPDATE_DB_DATA
 } from "./app.types";
 
 export const ActionsWithPayload = {
-    fetchData: () => createAction(FETCH_DATA, PAYLOAD_DATA),
+    startFetchData: () => createAction(START_FETCH_DATA),
+    finishFetchData: (data: Data) => createAction(FINISH_FETCH_DATA, data),
     clearInterval: () => createAction(CLEAR_INTERVAL),
     setDataFromDb: () => createAction(SET_DATA_FROM_DB),
     addDataToDb: () => createAction(ADD_DATA_TO_DB),
@@ -21,14 +23,23 @@ export const ActionsWithPayload = {
 
 export const Thunks = {
     getData: () => {
+        console.log('Fetching is in progress...');
         return (dispatch: Dispatch) => {
-            // fetch('http://localhost:3001/api/getData')
-            fetch('https://jsonplaceholder.typicode.com/posts')
-                .then((res) => res.json())
-                .then((data) => dispatch({
-                    type: FETCH_DATA,
-                    payload: data
-                }));
+            dispatch(ActionsWithPayload.startFetchData());
+            // fetch('https://jsonplaceholder.typicode.com/posts')
+            fetch('http://localhost:3001/api/getData')
+                .then((response) => response.json())
+                .then((data) => {
+                    let arrayOfData: Data[] = data.data;
+                    Object.values(arrayOfData).map((dataElement: Data) => {
+                        dispatch(ActionsWithPayload.finishFetchData(dataElement))
+                    });
+                });
+        }
+    },
+    addData: () => {
+        return (dispatch: Dispatch) => {
+
         }
     }
 };
