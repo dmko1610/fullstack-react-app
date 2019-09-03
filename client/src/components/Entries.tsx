@@ -1,20 +1,17 @@
 import * as React from 'react';
 import {Thunks} from "../store/app";
-import PropTypes from 'prop-types';
 import {connect} from "react-redux";
-import {AppState, Data} from "../store/app/app.types";
+import {Data} from "../store/app/app.types";
 import {DispatchThunk, RootState} from "../store";
 import {getDataFromDb} from "../store/app/app.selectors";
 
 
 interface IProps {
     getData?: any;
-    finishFetching?: any;
-    data: Data;
+    datas: Data[];
 }
 
 interface IState {
-    data: Data;
 }
 
 class EntriesComponent extends React.Component<IProps, IState> {
@@ -25,25 +22,25 @@ class EntriesComponent extends React.Component<IProps, IState> {
     }
 
     public render() {
-        console.log(this.props);
+        console.log(this.props.datas);
+        const dbEntries = this.props.datas.map(entry => (
+            <div style={{padding: '10px'}} key={entry.id}>
+                <span style={{color: 'gray'}}> id: </span> {entry.id} <br/>
+                <span style={{color: 'gray'}}> message: </span> {entry.message}
+                <hr/>
+            </div>
+        ));
         return (
-            <ul>
-                {!this.props.data
-                    ? 'NO DB ENTRIES'
-                    : Object.values(this.props.data).map((element: any) => (
-                        <li style={{padding: '10px'}} key={this.state.data._id}>
-                            <span style={{color: 'gray'}}> id: </span> {element.id} <br/>
-                            <span style={{color: 'gray'}}> message: </span> {element.message}
-                        </li>
-                    ))
-                }
-            </ul>
+            <div>
+                <h1>DB Entries</h1>
+                {dbEntries}
+            </div>
         )
     }
 }
 
 const mapStateToProps = (state: RootState) => ({
-    data: getDataFromDb(state)
+    datas: getDataFromDb(state)
 });
 
 const mapDispatchToProps = (dispatch: DispatchThunk) => ({

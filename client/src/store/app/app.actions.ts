@@ -13,7 +13,7 @@ import {
 
 export const ActionsWithPayload = {
     startFetchData: () => createAction(START_FETCH_DATA),
-    finishFetchData: (data: Data) => createAction(FINISH_FETCH_DATA, data),
+    finishFetchData: (data: Data[]) => createAction(FINISH_FETCH_DATA, data),
     clearInterval: () => createAction(CLEAR_INTERVAL),
     setDataFromDb: () => createAction(SET_DATA_FROM_DB),
     addDataToDb: () => createAction(ADD_DATA_TO_DB),
@@ -31,9 +31,9 @@ export const Thunks = {
                 .then((response) => response.json())
                 .then((data) => {
                     let arrayOfData: Data[] = data.data;
-                    Object.values(arrayOfData).map((dataElement: Data) => {
-                        dispatch(ActionsWithPayload.finishFetchData(dataElement))
-                    });
+                    dispatch(ActionsWithPayload.finishFetchData(arrayOfData))
+                    // Object.values(arrayOfData).map((dataElement: Data) => {
+                    // });
                 });
         }
     },

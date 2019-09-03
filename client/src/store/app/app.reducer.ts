@@ -7,6 +7,7 @@ const initialState: AppState = {
         _id: '',
         message: ''
     },
+    datas: [],
     message: '',
     intervalIsSet: setInterval(() => {
     }, 1000),
@@ -23,7 +24,7 @@ export const appReducer = (
         case FINISH_FETCH_DATA:
             return {
                 ...state,
-                data: action.payload
+                datas: action.payload
             };
         case CLEAR_INTERVAL:
             return {

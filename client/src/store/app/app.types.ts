@@ -14,6 +14,7 @@ export type Data = {
 
 export interface AppState {
     data: Data,
+    datas: Data[],
     message: string,
     intervalIsSet?: NodeJS.Timeout,
     idToDelete: number,
