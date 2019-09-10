@@ -1,30 +1,13 @@
 import * as React from 'react';
-import {Thunks} from "../store/app";
-import {connect} from "react-redux";
-import {Data} from "../store/app/app.types";
-import {DispatchThunk, RootState} from "../store";
-import {getDataFromDb} from "../store/app/app.selectors";
 
 
 interface IProps {
-    getData?: any;
-    datas: Data[];
-    unfocusPage?: any;
 }
 
 interface IState {
 }
 
 class EntriesComponent extends React.Component<IProps, IState> {
-
-
-    componentDidMount(): void {
-        this.props.getData && this.props.getData();
-    }
-
-    componentWillUnmount(): void {
-        this.props.unfocusPage && this.props.unfocusPage();
-    }
 
     public render() {
         console.log(this.props.datas);
@@ -44,14 +27,4 @@ class EntriesComponent extends React.Component<IProps, IState> {
     }
 }
 
-const mapStateToProps = (state: RootState) => ({
-    datas: getDataFromDb(state),
-});
-
-const mapDispatchToProps = (dispatch: DispatchThunk) => ({
-    getData: () => {
-        dispatch(Thunks.getData());
-    }
-});
-
-export const Entries = connect(mapStateToProps, mapDispatchToProps)(EntriesComponent);
+export const Entries = EntriesComponent;

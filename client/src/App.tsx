@@ -1,9 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios'
-import {Provider} from "react-redux";
-import {connect} from 'react-redux';
-import {store} from "./store";
-import {Thunks} from './store/app'
 import {Entries} from './components/Entries';
 
 interface State {
@@ -13,56 +8,55 @@ interface Props {
 }
 
 class App extends Component<Props, State> {
-  /*
-    putDataToDB = (message: string) => {
-        console.log(Object.values(this.state.data));
-        let currentIds = Object.values(this.state.data).map((data: any) => data.id);
-        let idToBeAdded = 0;
-        while (currentIds.includes(idToBeAdded)) {
-            ++idToBeAdded;
-        }
-        axios.post('http://localhost:3001/api/putData', {
-            id: idToBeAdded,
-            message: message,
-        });
-    };
+    /*
+      putDataToDB = (message: string) => {
+          console.log(Object.values(this.state.data));
+          let currentIds = Object.values(this.state.data).map((data: any) => data.id);
+          let idToBeAdded = 0;
+          while (currentIds.includes(idToBeAdded)) {
+              ++idToBeAdded;
+          }
+          axios.post('http://localhost:3001/api/putData', {
+              id: idToBeAdded,
+              message: message,
+          });
+      };
 
-    deleteFromDB = (idTodelete: number) => {
-        let objIdToDelete = null;
-        Object.values(this.state.data).forEach((dat: any) => {
-            if (dat.id === idTodelete) {
-                objIdToDelete = dat._id;
-            }
-        });
+      deleteFromDB = (idTodelete: number) => {
+          let objIdToDelete = null;
+          Object.values(this.state.data).forEach((dat: any) => {
+              if (dat.id === idTodelete) {
+                  objIdToDelete = dat._id;
+              }
+          });
 
-        axios.delete('http://localhost:3001/api/deleteData', {
-            data: {
-                id: objIdToDelete,
-            },
-        });
-    };
+          axios.delete('http://localhost:3001/api/deleteData', {
+              data: {
+                  id: objIdToDelete,
+              },
+          });
+      };
 
-    updateDB = (idToUpdate: number, updateToApply: string) => {
-        let objIdToUpdate = null;
-        // parseInt(idToUpdate);
-        Object.values(this.state.data).forEach((dat: any) => {
-            if (dat.id === idToUpdate) {
-                objIdToUpdate = dat._id;
-            }
-        });
+      updateDB = (idToUpdate: number, updateToApply: string) => {
+          let objIdToUpdate = null;
+          // parseInt(idToUpdate);
+          Object.values(this.state.data).forEach((dat: any) => {
+              if (dat.id === idToUpdate) {
+                  objIdToUpdate = dat._id;
+              }
+          });
 
-        axios.post('http://localhost:3001/api/updateData', {
-            id: objIdToUpdate,
-            update: {message: updateToApply},
-        });
-    };*/
+          axios.post('http://localhost:3001/api/updateData', {
+              id: objIdToUpdate,
+              update: {message: updateToApply},
+          });
+      };*/
 
     render() {
         return (
-            <Provider store={store}>
-                <div>
-                    <Entries/>
-                  {/*  <div style={{padding: '10px'}}>
+            <div>
+                <Entries/>
+                {/*  <div style={{padding: '10px'}}>
                         <input
                             type="text"
                             onChange={(e) => this.setState({message: e.target.value})}
@@ -105,8 +99,7 @@ class App extends Component<Props, State> {
                             UPDATE
                         </button>
                     </div>*/}
-                </div>
-            </Provider>
+            </div>
         )
     }
 }
