@@ -1,5 +1,6 @@
 import React from 'react';
 import {Data} from "../App";
+import './Entry.css';
 
 interface Props {
     data: Data
@@ -8,7 +9,7 @@ interface Props {
 const entry = (props: Props) => {
 
     return (
-        <div>
+        <div className="Entry">
             <span>Id: </span> {props.data.id} <br/>
             <span>Message: </span> {props.data.message}
         </div>

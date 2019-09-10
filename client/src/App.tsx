@@ -56,6 +56,14 @@ class App extends Component {
             });
     };
 
+    nameChangedHandler = (event: any) => {
+      this.setState({
+          data: {
+              message: event.target.value
+          }
+      })
+    };
+
     /*
       putDataToDB = (message: string) => {
           console.log(Object.values(this.state.data));
@@ -103,6 +111,7 @@ class App extends Component {
     render() {
         return (
             <div>
+                <button></button>
                 <Entry data={this.state.datas[0] || {id: '', message: ''}}/>
                 <Entry data={this.state.datas[1] || {id: '', message: ''}}/>
                 <Entry data={this.state.datas[2] || {id: '', message: ''}}/>
