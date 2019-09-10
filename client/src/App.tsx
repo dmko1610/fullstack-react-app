@@ -1,13 +1,61 @@
 import React, {Component} from 'react';
-import {Entries} from './components/Entries';
+import Entry from './components/Entry';
+
+export type Data = {
+    id: number,
+    _id: string,
+    message: string,
+}
 
 interface State {
+    datas: Data[],
+    data: Data,
+    id: number,
+    message: string,
+    idToDelete: number,
+    idToUpdate: number,
+    updateToApply: string
 }
 
 interface Props {
+
 }
 
-class App extends Component<Props, State> {
+class App extends Component {
+    state: State;
+
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            datas: [],
+            data: {
+                id: 0,
+                message: '',
+                _id: ''
+            },
+            id: 0,
+            message: '',
+            idToDelete: 0,
+            idToUpdate: 0,
+            updateToApply: '',
+        };
+    }
+
+    componentDidMount(): void {
+        this.fetchData();
+    }
+
+    fetchData = () => {
+        fetch('http://localhost:3001/api/getData')
+            .then((data) => data.json())
+            .then((res) => {
+                // res.data.map((entry: Data) => {
+                this.setState({datas: res.data});
+                // });
+            });
+    };
+
     /*
       putDataToDB = (message: string) => {
           console.log(Object.values(this.state.data));
@@ -55,7 +103,9 @@ class App extends Component<Props, State> {
     render() {
         return (
             <div>
-                <Entries/>
+                <Entry data={this.state.datas[0] || {id: '', message: ''}}/>
+                <Entry data={this.state.datas[1] || {id: '', message: ''}}/>
+                <Entry data={this.state.datas[2] || {id: '', message: ''}}/>
                 {/*  <div style={{padding: '10px'}}>
                         <input
                             type="text"

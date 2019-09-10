@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
 
 class AddEntryComponent extends Component {
     render() {
@@ -11,4 +10,3 @@ class AddEntryComponent extends Component {
     }
 }
 
-// export const AddEntry = connect(null, null, AddEntryComponent);
