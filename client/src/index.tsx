@@ -10,7 +10,7 @@ let render = () => {
         <App/>,
         rootElement
     );
-}
+};
 
 render();
 
