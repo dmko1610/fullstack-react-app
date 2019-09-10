@@ -1,5 +1,5 @@
 import React from 'react';
-import {Data} from "../App";
+import {Data} from "../../../containers/App";
 import './Entry.css';
 
 interface Props {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Entry from './components/Entry';
+import Entry from '../components/Entries/Entry/Entry';
 
 export type Data = {
     id: number,
