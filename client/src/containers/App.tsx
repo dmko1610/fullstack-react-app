@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import Entry from '../components/Entries/Entry/Entry';
+import Entries from '../components/Entries/Entries';
+// @ts-ignore
+import classes from './App.css'
 
 export type Data = {
     id: number,
@@ -50,18 +52,28 @@ class App extends Component {
         fetch('http://localhost:3001/api/getData')
             .then((data) => data.json())
             .then((res) => {
-                // res.data.map((entry: Data) => {
                 this.setState({datas: res.data});
-                // });
             });
     };
 
-    nameChangedHandler = (event: any) => {
-      this.setState({
-          data: {
-              message: event.target.value
-          }
-      })
+    nameChangedHandler = (event: any, _id: string) => {
+        const entryIndex = this.state.datas.findIndex(index => {
+            return index._id === _id;
+        });
+        const entry = {
+            ...this.state.datas[entryIndex]
+        };
+        entry.message = event.target.value;
+
+        const entries = [...this.state.datas];
+        entries[entryIndex] = entry;
+        this.setState({datas: entries});
+    };
+
+    deleteEntryHandler = (index: number) => {
+        const entries = [...this.state.datas];
+        entries.splice(index, 1);
+        this.setState({datas: entries});
     };
 
     /*
@@ -110,11 +122,11 @@ class App extends Component {
 
     render() {
         return (
-            <div>
-                <button></button>
-                <Entry data={this.state.datas[0] || {id: '', message: ''}}/>
-                <Entry data={this.state.datas[1] || {id: '', message: ''}}/>
-                <Entry data={this.state.datas[2] || {id: '', message: ''}}/>
+            <div className={classes.App}>
+                <Entries
+                    entries={this.state.datas}
+                    clicked={this.deleteEntryHandler}
+                    changed={this.nameChangedHandler}/>
                 {/*  <div style={{padding: '10px'}}>
                         <input
                             type="text"
