@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class Cockpit extends Component {
-    render() {
-        return (
-            <div>
+const cockpit = (props: any) => {
+    return (
+        <div>
+            <h1>Full-stack react app</h1>
+            <p>It is Working now</p>
+            <button>Hide Entries</button>
+        </div>
+    );
+};
 
-            </div>
-        );
-    }
-}
-
-export default Cockpit;
+export default cockpit;

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Entries from '../components/Entries/Entries';
+import Cockpit from '../components/Cockpit/Cockpit';
 // @ts-ignore
 import classes from './App.css'
 
@@ -123,6 +124,7 @@ class App extends Component {
     render() {
         return (
             <div className={classes.App}>
+                <Cockpit/>
                 <Entries
                     entries={this.state.datas}
                     clicked={this.deleteEntryHandler}
