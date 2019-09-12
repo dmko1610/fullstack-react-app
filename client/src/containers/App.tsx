@@ -143,7 +143,7 @@ class App extends Component {
             <div className={classes.App}>
                 <Cockpit
                     showEntries={this.state.showEntries}
-                    datas={this.state.datas}
+                    datasLength={this.state.datas.length}
                     clicked={this.toggleEntriesHandler}/>
                 {entries}
                 {/*  <div style={{padding: '10px'}}>
