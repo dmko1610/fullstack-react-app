@@ -13,6 +13,7 @@ export type Data = {
 interface State {
     datas: Data[],
     data: Data,
+    showEntries: boolean
     id: number,
     message: string,
     idToDelete: number,
@@ -37,6 +38,7 @@ class App extends Component {
                 message: '',
                 _id: ''
             },
+            showEntries: false,
             id: 0,
             message: '',
             idToDelete: 0,
@@ -75,6 +77,11 @@ class App extends Component {
         const entries = [...this.state.datas];
         entries.splice(index, 1);
         this.setState({datas: entries});
+    };
+
+    toggleEntriesHandler = () => {
+        const doesShow = this.state.showEntries;
+        this.setState({showEntries: !doesShow});
     };
 
     /*
@@ -122,13 +129,23 @@ class App extends Component {
       };*/
 
     render() {
-        return (
-            <div className={classes.App}>
-                <Cockpit/>
+        let entries = null;
+        if (this.state.showEntries) {
+            entries = (
                 <Entries
                     entries={this.state.datas}
                     clicked={this.deleteEntryHandler}
                     changed={this.nameChangedHandler}/>
+            );
+        }
+
+        return (
+            <div className={classes.App}>
+                <Cockpit
+                    showEntries={this.state.showEntries}
+                    datas={this.state.datas}
+                    clicked={this.toggleEntriesHandler}/>
+                {entries}
                 {/*  <div style={{padding: '10px'}}>
                         <input
                             type="text"
