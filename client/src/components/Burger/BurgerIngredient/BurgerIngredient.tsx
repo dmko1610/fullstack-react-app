@@ -18,7 +18,7 @@ class BurgerIngredient extends Component<Props> {
                 ingredient = (
                     <div className={classes.BreadTop}>
                         <div className={classes.Seeds1}/>
-                        <div className={classes.Seeds1}/>
+                        <div className={classes.Seeds2}/>
                     </div>
                 );
                 break;
