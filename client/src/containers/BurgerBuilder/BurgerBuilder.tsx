@@ -7,13 +7,13 @@ export type Ingredient = {
     salad: number,
     bacon: number,
     cheese: number,
-    meat: number,
-    type: string
+    meat: number
 }
 
 interface State {
     ingredients: Ingredient,
-    totalPrice: number
+    totalPrice: number,
+    purchasable: boolean
 }
 
 const INGREDIENT_PRICES = {
@@ -29,10 +29,10 @@ class BurgerBuilder extends Component {
             salad: 0,
             bacon: 0,
             cheese: 0,
-            meat: 0,
-            type: ''
+            meat: 0
         },
-        totalPrice: 4
+        totalPrice: 4,
+        purchasable: false
     };
 
     addIngredientHandler = (type: string) => {
@@ -52,6 +52,7 @@ class BurgerBuilder extends Component {
             totalPrice: newPrice,
             ingredients: updatedIngredients
         });
+        this.updatePurchaseState(updatedIngredients);
     };
 
     removeIngredientHandler = (type: string) => {
@@ -74,8 +75,19 @@ class BurgerBuilder extends Component {
             totalPrice: newPrice,
             ingredients: updatedIngredients
         });
-
+        this.updatePurchaseState(updatedIngredients);
     };
+
+    updatePurchaseState(ingredients: any) {
+        const sum = Object.keys(ingredients)
+            .map(igKey => {
+                // @ts-ignore
+                return ingredients[igKey]
+            }).reduce((sum, el) => {
+                return sum + el;
+            }, 0);
+        this.setState({purchasable: sum > 0});
+    }
 
     render() {
         const disabledInfo = {
@@ -92,6 +104,7 @@ class BurgerBuilder extends Component {
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     disabled={disabledInfo}
+                    purchasable={this.state.purchasable}
                     price={this.state.totalPrice}/>
             </Auxiliary>
         );
