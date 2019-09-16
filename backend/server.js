@@ -12,7 +12,7 @@ const router = express.Router();
 
 // const dbRoute =
 //     'mongodb://<your-db-username-here>:<your-db-password-here>@ds249583.mlab.com:49583/fullstack_app';
-const dbRoute = 'mongodb://@localhost:27017/admin';
+const dbRoute = 'mongodb://@localhost:27017/local';
 
 mongoose.connect(dbRoute, { useNewUrlParser: true });
 
