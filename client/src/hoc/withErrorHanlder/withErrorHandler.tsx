@@ -3,12 +3,14 @@ import Modal from '../../components/UI/Modal/Modal';
 import Auxiliary from '../Auxiliary/Auxiliary';
 import {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
 
-const withErrorHandler = (WrappedComponent: any, axios: any) => {
-    interface State {
+interface IState {
+    error: null | boolean | AxiosError
+}
 
-    }
-    return class extends Component<State> {
+const withErrorHandler = (WrappedComponent: any, axios: any) => {
+    return class extends Component<{}, IState> {
         componentDidMount(): void {
+            console.log('[withErrorHandler] componentDidMount')
             axios.interceptors.request.use((req: AxiosRequestConfig) => {
                 this.setState({error: null});
                 return req;
@@ -23,13 +25,14 @@ const withErrorHandler = (WrappedComponent: any, axios: any) => {
         };
 
         render() {
+            console.log(this.state);
             return (
                 <Auxiliary>
                     <Modal
-                        show={(this.state as any).error}
+                        show={this.state.error}
                         modalClosed={this.errorConfirmedHandler}>
-                        {(this.state as any).error
-                            ? (this.state as any).error.message
+                        {this.state.error
+                            ? this.state.error
                             : null}
                     </Modal>
                     <WrappedComponent {...this.props}/>
