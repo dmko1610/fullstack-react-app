@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import Auxiliary from '../../../hoc/Auxiliary'
 import Button from '../../UI/Button/Button';
 import {Ingredient} from "../../../containers/BurgerBuilder/BurgerBuilder";
-import {log} from "util";
 
 interface Props {
     ingredients: Ingredient,

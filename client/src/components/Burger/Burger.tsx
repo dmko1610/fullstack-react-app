@@ -15,8 +15,7 @@ const burger = (props: any) => {
         }, []);
 
     if (transformedIngredients.length === 0) {
-        // @ts-ignore
-        transformedIngredients = <p>Please start adding ingredients!</p>
+        (transformedIngredients as any) = <p>Please start adding ingredients!</p>;
     }
     return (
         <div className={classes.Burger}>

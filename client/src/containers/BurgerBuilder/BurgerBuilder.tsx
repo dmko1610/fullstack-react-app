@@ -40,16 +40,13 @@ class BurgerBuilder extends Component {
     };
 
     addIngredientHandler = (type: string) => {
-        // @ts-ignore
-        const oldCount = this.state.ingredients[type];
+        const oldCount = (this.state.ingredients as any)[type];
         const updatedCount = oldCount + 1;
         const updatedIngredients = {
             ...this.state.ingredients
         };
-        // @ts-ignore
-        updatedIngredients[type] = updatedCount;
-        // @ts-ignore
-        const priceAddition = INGREDIENT_PRICES[type];
+        (updatedIngredients as any)[type] = updatedCount;
+        const priceAddition = (INGREDIENT_PRICES as any)[type];
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition;
         this.setState({
@@ -60,8 +57,7 @@ class BurgerBuilder extends Component {
     };
 
     removeIngredientHandler = (type: string) => {
-        // @ts-ignore
-        const oldCount = this.state.ingredients[type];
+        const oldCount = (this.state.ingredients as any)[type];
         if (oldCount <= 0) {
             return;
         }
@@ -69,10 +65,8 @@ class BurgerBuilder extends Component {
         const updatedIngredients = {
             ...this.state.ingredients
         };
-        // @ts-ignore
-        updatedIngredients[type] = updatedCount;
-        // @ts-ignore
-        const priceDeduction = INGREDIENT_PRICES[type];
+        (updatedIngredients as any)[type] = updatedCount;
+        const priceDeduction = (INGREDIENT_PRICES as any)[type];
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice - priceDeduction;
         this.setState({
@@ -85,7 +79,6 @@ class BurgerBuilder extends Component {
     updatePurchaseState(ingredients: any) {
         const sum = Object.keys(ingredients)
             .map(igKey => {
-                // @ts-ignore
                 return ingredients[igKey]
             }).reduce((sum, el) => {
                 return sum + el;
@@ -110,8 +103,7 @@ class BurgerBuilder extends Component {
             ...this.state.ingredients
         };
         for (let disabledInfoKey in disabledInfo) {
-            // @ts-ignore
-            disabledInfo[disabledInfoKey] = disabledInfo[disabledInfoKey] <= 0
+            (disabledInfo as any)[disabledInfoKey] = (disabledInfo as any)[disabledInfoKey] <= 0
         }
         return (
             <Auxiliary>

@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import Auxiliary from '../../hoc/Auxiliary';
 // @ts-ignore
 import classes from './Layout.css';
-import Toolbar from '../Navigation/Toolbar/Toolbar';
-import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
+import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
+import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
 interface State {
     showSideDrawer: boolean
