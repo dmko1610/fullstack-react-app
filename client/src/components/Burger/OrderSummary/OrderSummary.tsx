@@ -2,22 +2,28 @@ import React, {Component} from "react";
 import Auxiliary from '../../../hoc/Auxiliary'
 import Button from '../../UI/Button/Button';
 import {Ingredient} from "../../../containers/BurgerBuilder/BurgerBuilder";
+import {log} from "util";
 
 interface Props {
-    ingredients: Ingredient[],
+    ingredients: Ingredient,
     price: number,
-    purchaseCancelled: boolean,
-    purchaseContinued: boolean
+    purchaseCancelled: any,
+    purchaseContinued: any
 }
 
 class OrderSummary extends Component<Props> {
+    componentDidUpdate(): void {
+        console.log('[OrderSummary] did update');
+    }
 
     render() {
         const ingredientSummary = Object.keys(this.props.ingredients)
-            .map((igKey: any) => {
+            .map((igKey: string) => {
+                // @ts-ignore
                 return <li key={igKey}>
-                    <span style={{textTransform: 'capitalize'}}>{igKey}</span>:
-                    {this.props.ingredients[igKey]}</li>;
+                    <span style={{textTransform: 'capitalize'}}>{igKey}</span>
+                    :{(this.props.ingredients as any)[igKey]}
+                </li>;
             });
         return (
             <Auxiliary>
