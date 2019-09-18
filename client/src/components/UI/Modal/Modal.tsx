@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 // @ts-ignore
 import classes from './Modal.css';
-import Auxiliary from '../../../hoc/Auxiliary';
+import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import Backdrop from '../Backdrop/Backdrop';
 
 const styles = {
@@ -18,14 +18,20 @@ const styles = {
 interface Props {
     show: boolean,
     modalClosed: any,
+    children?: React.ReactNode
 }
 
-class Modal extends Component<Props> {
-    shouldComponentUpdate(nextProps: Props, nextState: any) {
-        return nextProps.show !== this.props.show
+interface State {
+    error: any,
+
+}
+
+class Modal extends Component<Props, State> {
+    shouldComponentUpdate(nextProps: Props, nextState: State) {
+        return nextProps.show !== this.props.show || nextProps.children !== this.props.children
     }
 
-    componentDidUpdate(prevProps: Props, prevState: Readonly<{}>) {
+    componentDidUpdate(prevProps: Props, prevState: State) {
         console.log('[Modal] did update');
     }
 
