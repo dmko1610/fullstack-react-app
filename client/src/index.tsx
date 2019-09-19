@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+import {BrowserRouter} from 'react-router-dom';
 
+
+const app = (
+    <BrowserRouter>
+        <App/>
+    </BrowserRouter>
+);
 const rootElement = document.getElementById('root');
 
-let render = () => {
-    ReactDOM.render(
-        <App/>,
-        rootElement
-    );
-};
-
-render();
+ReactDOM.render(app, rootElement);
 
 serviceWorker.register();

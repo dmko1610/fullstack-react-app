@@ -23,14 +23,17 @@ const withErrorHandler = (WrappedComponent: any, axios: any) => {
         };
 
         componentWillMount(): void {
-            console.log('[withErrorHandler] componentDidMount');
-            this.state.reqInterceptor = axios.interceptors.request.use((req: AxiosRequestConfig) => {
+            let requestInt = null;
+            let responseInt = null;
+            requestInt = axios.interceptors.request.use((req: AxiosRequestConfig) => {
                 this.setState({error: null});
                 return req;
             });
-            this.state.resInterceptor = axios.interceptors.response.use((res: AxiosResponse) => res, (error: AxiosError) => {
+            this.setState({reqInterceptor: requestInt});
+            responseInt = axios.interceptors.response.use((res: AxiosResponse) => res, (error: AxiosError) => {
                 this.setState({error: error});
-            })
+            });
+            this.setState({resInterceptor: responseInt})
         }
 
         componentWillUnmount(): void {
