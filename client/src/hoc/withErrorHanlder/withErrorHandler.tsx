@@ -8,24 +8,34 @@ type Error = {
 }
 
 interface IState {
-    error: Error | null
+    error: Error | null,
+    reqInterceptor: any,
+    resInterceptor: any
 }
 
 const withErrorHandler = (WrappedComponent: any, axios: any) => {
     return class extends Component {
         state: IState = {
-            error: null
+            error: null,
+            reqInterceptor: axios,
+            resInterceptor: axios
+
         };
 
-        componentDidMount(): void {
+        componentWillMount(): void {
             console.log('[withErrorHandler] componentDidMount');
-            axios.interceptors.request.use((req: AxiosRequestConfig) => {
+            this.state.reqInterceptor = axios.interceptors.request.use((req: AxiosRequestConfig) => {
                 this.setState({error: null});
                 return req;
             });
-            axios.interceptors.response.use((res: AxiosResponse) => res, (error: AxiosError) => {
+            this.state.resInterceptor = axios.interceptors.response.use((res: AxiosResponse) => res, (error: AxiosError) => {
                 this.setState({error: error});
             })
+        }
+
+        componentWillUnmount(): void {
+            axios.interceptors.request.eject(this.state.reqInterceptor);
+            axios.interceptors.response.eject(this.state.resInterceptor);
         }
 
         errorConfirmedHandler = () => {
