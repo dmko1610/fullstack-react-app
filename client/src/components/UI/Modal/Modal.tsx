@@ -22,7 +22,7 @@ interface Props {
 }
 
 interface State {
-    error: any
+    error: boolean
 }
 
 class Modal extends Component<Props, State> {
