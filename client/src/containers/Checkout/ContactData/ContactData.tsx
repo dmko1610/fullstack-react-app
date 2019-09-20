@@ -6,47 +6,74 @@ import {AxiosError, AxiosResponse} from "axios";
 import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import {RouteComponentProps} from "react-router";
+import Input from '../../../components/UI/Input/Input';
 
 interface ChildComponentProps extends RouteComponentProps<any> {
     ingredients: {},
     totalPrice: number
 }
 
-interface Props {
-    ingredients: {},
-    totalPrice: number
-}
-
 interface State {
-    name: string,
-    email: string,
-    address: {}
-    ingredients: {
-        salad: number,
-        meat: number,
-        cheese: number,
-        bacon: number
-    },
+    orderForm: {},
     totalPrice: number,
     loading: boolean,
 }
 
-
 class ContactData extends Component<ChildComponentProps, State> {
     state: State = {
-        ingredients: {
-            salad: 1,
-            meat: 1,
-            cheese: 1,
-            bacon: 1
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your Name'
+                },
+                value: ''
+            },
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Street'
+                },
+                value: ''
+            },
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'ZIP Code'
+                },
+                value: ''
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: ''
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Your E-Mail'
+                },
+                value: ''
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'fastest', displayValue: 'Fastest'},
+                        {value: 'cheapest', displayValue: 'Cheapest'}
+                    ]
+                },
+                value: ''
+            }
         },
         totalPrice: 0,
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: ''
-        },
         loading: false,
     };
 
@@ -56,16 +83,6 @@ class ContactData extends Component<ChildComponentProps, State> {
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.totalPrice,
-            customer: {
-                name: 'Dmitry Kovalev',
-                address: {
-                    street: 'BLahblab',
-                    zipCode: '443554',
-                    country: 'Russia'
-                },
-                email: 'mister-trigger@yandex.ru'
-            },
-            deliveryMethod: 'fastest'
         };
         axios.post('/orders.json', order)
             .then((response: AxiosResponse) => {
@@ -77,13 +94,36 @@ class ContactData extends Component<ChildComponentProps, State> {
             });
     };
 
+    inputChangedHandler = (event: any, inputIdentifier: string) => {
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        };
+        const updatedFormElement = {
+            ...(updatedOrderForm as any)[inputIdentifier]
+        };
+        updatedFormElement.value = event.target.value;
+        (updatedOrderForm as any)[inputIdentifier] = updatedFormElement;
+        this.setState({orderForm: updatedOrderForm});
+    };
+
     render() {
+        const formElementsArray = [];
+        for (let key in this.state.orderForm) {
+            formElementsArray.push({
+                id: key,
+                config: (this.state.orderForm as any)[key]
+            })
+        }
         let form = (
             <form>
-                <input className={classes.Input} type="text" name="name" placeholder="Your Name"/>
-                <input className={classes.Input} type="email" name="email" placeholder="Your Mail"/>
-                <input className={classes.Input} type="text" name="street" placeholder="Street"/>
-                <input className={classes.Input} type="text" name="postal" placeholder="Postal Code"/>
+                {formElementsArray.map(formElement => (
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        changed={(event: any) => this.inputChangedHandler(event, formElement.id)}/>
+                ))}
                 <Button
                     btnType="Success"
                     clicked={this.orderHandler}>ORDER</Button>
