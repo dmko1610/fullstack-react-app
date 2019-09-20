@@ -7,6 +7,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from "../../hoc/withErrorHanlder/withErrorHandler";
+import {RouteComponentProps} from "react-router-dom";
 
 export type Ingredient = {
     salad: number,
@@ -24,6 +25,9 @@ interface State {
     error: boolean
 }
 
+interface ChildComponentProps extends RouteComponentProps<any> {
+}
+
 const INGREDIENT_PRICES = {
     salad: 0.5,
     cheese: 0.4,
@@ -31,7 +35,7 @@ const INGREDIENT_PRICES = {
     bacon: 1.4
 };
 
-class BurgerBuilder extends Component {
+class BurgerBuilder extends Component<ChildComponentProps> {
     state: State = {
         ingredients: null,
         totalPrice: 4,
@@ -130,7 +134,15 @@ class BurgerBuilder extends Component {
         //     .catch(error => {
         //         this.setState({loading: false, purchasing: false})
         //     });
-        this.props.history.push('/checkout');
+        const queryParams = [];
+        for (let i in this.state.ingredients) {
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent((this.state.ingredients as any)[i]));
+        }
+        const queryString = queryParams.join('&');
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
     };
 
     render() {
