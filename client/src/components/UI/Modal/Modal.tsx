@@ -16,14 +16,13 @@ const styles = {
 };
 
 interface Props {
-    show: boolean,
+    show: any,
     modalClosed: any,
     children?: React.ReactNode
 }
 
 interface State {
-    error: any,
-
+    error: boolean
 }
 
 class Modal extends Component<Props, State> {
