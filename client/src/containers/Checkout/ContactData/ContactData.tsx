@@ -2,26 +2,28 @@ import React, {Component} from "react";
 import Button from '../../../components/UI/Button/Button';
 // @ts-ignore
 import classes from './ContactData.css';
+import {connect} from 'react-redux'
 import {AxiosError, AxiosResponse} from "axios";
 import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import {RouteComponentProps} from "react-router";
 import Input from '../../../components/UI/Input/Input';
+import {State} from "../../../store/reducers";
 
 interface ChildComponentProps extends RouteComponentProps<any> {
-    ingredients: {},
-    totalPrice: number
+    ings: {},
+    price: number
 }
 
-interface State {
+interface IState {
     orderForm: {},
     totalPrice: number,
     loading: boolean,
     formIsValid: boolean
 }
 
-class ContactData extends Component<ChildComponentProps, State> {
-    state: State = {
+class ContactData extends Component<ChildComponentProps, IState> {
+    state: IState = {
         orderForm: {
             name: {
                 elementType: 'input',
@@ -116,8 +118,8 @@ class ContactData extends Component<ChildComponentProps, State> {
             (formData as any)[formElementIdentifier] = (this.state.orderForm as any)[formElementIdentifier].value;
         }
         const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.totalPrice,
+            ingredients: this.props.ings,
+            price: this.props.price,
             orderData: formData
         };
         axios.post('/orders.json', order)
@@ -206,4 +208,12 @@ class ContactData extends Component<ChildComponentProps, State> {
     }
 }
 
-export default ContactData;
+const mapStateToProps = (state: State) => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
+};
+
+// @ts-ignore
+export default connect(mapStateToProps)(ContactData);

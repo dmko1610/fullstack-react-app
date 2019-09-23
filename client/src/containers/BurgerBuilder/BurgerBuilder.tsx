@@ -10,7 +10,7 @@ import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from "../../hoc/withErrorHanlder/withErrorHandler";
 import {RouteComponentProps} from "react-router-dom";
-import {Ingredient} from "../../store/reducers";
+import {Ingredient, State} from "../../store/reducers";
 
 interface ChildComponentProps extends RouteComponentProps<any> {
     ings: Ingredient,
@@ -19,34 +19,28 @@ interface ChildComponentProps extends RouteComponentProps<any> {
     price: number
 }
 
-interface State {
-    totalPrice: number,
-    ingredients: Ingredient | null
-    purchasable: boolean,
+interface IState {
     purchasing: boolean,
     loading: boolean,
     error: boolean
 }
 
 class BurgerBuilder extends Component<ChildComponentProps> {
-    state: State = {
-        totalPrice: 0,
-        ingredients: null,
-        purchasable: false,
+    state: IState = {
         purchasing: false,
         loading: false,
         error: false
     };
 
     componentDidMount(): void {
-        axios.get('/ingredients.json')
-            .then(response => {
-                this.setState({ingredients: response.data});
-            })
-            .catch(error => {
-                    this.setState({error: true});
-                }
-            );
+        // axios.get('/ingredients.json')
+        //     .then(response => {
+        //         this.setState({ingredients: response.data});
+        //     })
+        //     .catch(error => {
+        //             this.setState({error: true});
+        //         }
+        //     );
     }
 
     updatePurchaseState(ingredients: any) {
@@ -56,7 +50,7 @@ class BurgerBuilder extends Component<ChildComponentProps> {
             }).reduce((sum, el) => {
                 return sum + el;
             }, 0);
-        this.setState({purchasable: sum > 0});
+        return sum > 0;
     }
 
     purchaseHandler = () => {
@@ -68,16 +62,7 @@ class BurgerBuilder extends Component<ChildComponentProps> {
     };
 
     purchaseContinueHandler = () => {
-        const queryParams = [];
-        for (let i in this.props.ings) {
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent((this.props.ings as any)[i]));
-        }
-        queryParams.push('price=' + this.state.totalPrice);
-        const queryString = queryParams.join('&');
-        this.props.history.push({
-            pathname: '/checkout',
-            search: '?' + queryString
-        });
+        this.props.history.push('/checkout');
     };
 
     render() {
@@ -103,7 +88,7 @@ class BurgerBuilder extends Component<ChildComponentProps> {
                         ingredientAdded={this.props.onIngredientAdded}
                         ingredientRemoved={this.props.onIngredientRemoved}
                         disabled={disabledInfo}
-                        purchasable={this.state.purchasable}
+                        purchasable={this.updatePurchaseState(this.props.ings)}
                         price={this.props.price}
                         ordered={this.purchaseHandler}/>
                 </Auxiliary>);
