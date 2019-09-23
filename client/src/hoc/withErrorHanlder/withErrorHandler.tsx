@@ -62,4 +62,5 @@ const withErrorHandler = (WrappedComponent: any, axios: any) => {
     }
 };
 
+// @ts-ignore
 export default withErrorHandler;
