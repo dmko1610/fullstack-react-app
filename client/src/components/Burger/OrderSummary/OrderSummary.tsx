@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary'
 import Button from '../../UI/Button/Button';
-import {Ingredient} from "../../../store/reducers";
+import {Ingredient} from "../../../store/reducers/burgerBuilder";
 
 interface Props {
     ingredients: Ingredient,

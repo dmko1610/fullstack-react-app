@@ -3,7 +3,7 @@ import {Route, RouteComponentProps} from 'react-router-dom';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from "./ContactData/ContactData";
 import {connect} from 'react-redux';
-import {State} from "../../store/reducers";
+import {State} from "../../store/reducers/burgerBuilder";
 
 interface ChildComponentProps extends RouteComponentProps<any> {
     ings: {}

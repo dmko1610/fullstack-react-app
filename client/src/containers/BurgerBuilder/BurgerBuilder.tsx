@@ -1,46 +1,39 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import * as actionTypes from '../../store/actions';
+import * as burgerBuilderActions from '../../store/actions/index';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
-import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import withErrorHandler from "../../hoc/withErrorHanlder/withErrorHandler";
 import {RouteComponentProps} from "react-router-dom";
-import {Ingredient, State} from "../../store/reducers";
+import {Ingredient, State} from "../../store/reducers/burgerBuilder";
+import axios from "../../axios-orders";
+import withErrorHandler from "../../hoc/withErrorHanlder/withErrorHandler";
 
 interface ChildComponentProps extends RouteComponentProps<any> {
     ings: Ingredient,
     onIngredientAdded: any
     onIngredientRemoved: any,
-    price: number
+    onInitIngredients: any,
+    price: number,
+    error: boolean
 }
 
 interface IState {
     purchasing: boolean,
     loading: boolean,
-    error: boolean
 }
 
 class BurgerBuilder extends Component<ChildComponentProps> {
     state: IState = {
         purchasing: false,
         loading: false,
-        error: false
     };
 
     componentDidMount(): void {
-        // axios.get('/ingredients.json')
-        //     .then(response => {
-        //         this.setState({ingredients: response.data});
-        //     })
-        //     .catch(error => {
-        //             this.setState({error: true});
-        //         }
-        //     );
+        this.props.onInitIngredients()
     }
 
     updatePurchaseState(ingredients: any) {
@@ -77,7 +70,7 @@ class BurgerBuilder extends Component<ChildComponentProps> {
         if (this.state.loading) {
             orderSummary = <Spinner/>
         }
-        let burger = this.state.error
+        let burger = this.props.error
             ? <p>Ingredients can't be loaded</p>
             : <Spinner/>;
         if (this.props.ings) {
@@ -115,21 +108,18 @@ class BurgerBuilder extends Component<ChildComponentProps> {
 const mapStateToProps = (state: State) => {
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        onIngredientAdded: (ingName: string) => dispatch({
-            type: actionTypes.ADD_INGREDIENT,
-            ingredientName: ingName
-        }),
-        onIngredientRemoved: (ingName: string) => dispatch({
-            type: actionTypes.REMOVE_INGREDIENT,
-            ingredientName: ingName
-        })
+        onIngredientAdded: (ingName: string) => dispatch(burgerBuilderActions.addIngredient(ingName)),
+        onIngredientRemoved: (ingName: string) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
     }
 };
 
+// @ts-ignore
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios));

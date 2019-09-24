@@ -8,7 +8,7 @@ import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import {RouteComponentProps} from "react-router";
 import Input from '../../../components/UI/Input/Input';
-import {State} from "../../../store/reducers";
+import {State} from "../../../store/reducers/burgerBuilder";
 
 interface ChildComponentProps extends RouteComponentProps<any> {
     ings: {},
