@@ -7,14 +7,15 @@ import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import {RouteComponentProps} from "react-router";
 import Input from '../../../components/UI/Input/Input';
-import {State} from "../../../store/reducers/burgerBuilder";
 import withErrorHandler from "../../../hoc/withErrorHanlder/withErrorHandler";
 import * as actions from '../../../store/actions/index'
+import {State} from "../../../store/reducers/order";
 
 interface ChildComponentProps extends RouteComponentProps<any> {
     ings: {},
     price: number,
-    onOrderBurger: any
+    onOrderBurger: any,
+    loading: boolean
 }
 
 interface IState {
@@ -201,7 +202,7 @@ class ContactData extends Component<ChildComponentProps, IState> {
                     btnType="Success"
                     disabled={!this.state.formIsValid}>ORDER</Button>
             </form>);
-        if (this.state.loading) {
+        if (this.props.loading) {
             form = <Spinner/>;
         }
         return (
@@ -215,14 +216,17 @@ class ContactData extends Component<ChildComponentProps, IState> {
 
 const mapStateToProps = (state: State) => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.order.loading
     }
 };
 
 const mapDispatchToProps = (dispatch: any) => {
-    return {onOrderBurger: (orderData: {}) => dispatch(actions.purchaseBurgerStart(orderData))}
+    return {
+        onOrderBurger: (orderData: {}) => dispatch(actions.purchaseBurger(orderData))
+    }
 };
 
 // @ts-ignore
-export default connect(mapStateToProps)(withErrorHandler(ContactData, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));

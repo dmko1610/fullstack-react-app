@@ -9,15 +9,19 @@ export type Ingredient = {
 
 
 export interface State {
-    ingredients: Ingredient | null,
-    totalPrice: number,
-    error: boolean
+    burgerBuilder: {
+        ingredients: Ingredient | null,
+        totalPrice: number,
+        error: boolean
+    }
 }
 
 const initialState: State = {
-    ingredients: null,
-    totalPrice: 4,
-    error: false
+    burgerBuilder: {
+        ingredients: null,
+        totalPrice: 4,
+        error: false
+    },
 };
 
 const INGREDIENT_PRICES = {
@@ -33,19 +37,19 @@ const reducer = (state: State = initialState, action: any) => {
             return {
                 ...state,
                 ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: (state.ingredients as any)[action.ingredientName] + 1
+                    ...state.burgerBuilder.ingredients,
+                    [action.ingredientName]: (state.burgerBuilder.ingredients as any)[action.ingredientName] + 1
                 },
-                totalPrice: state.totalPrice + (INGREDIENT_PRICES as any)[action.ingredientName]
+                totalPrice: state.burgerBuilder.totalPrice + (INGREDIENT_PRICES as any)[action.ingredientName]
             };
         case actionTypes.REMOVE_INGREDIENT:
             return {
                 ...state,
                 ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: (state.ingredients as any)[action.ingredientName] - 1
+                    ...state.burgerBuilder.ingredients,
+                    [action.ingredientName]: (state.burgerBuilder.ingredients as any)[action.ingredientName] - 1
                 },
-                totalPrice: state.totalPrice - (INGREDIENT_PRICES as any)[action.ingredientName]
+                totalPrice: state.burgerBuilder.totalPrice - (INGREDIENT_PRICES as any)[action.ingredientName]
             };
         case actionTypes.SET_INGREDIENTS:
             return {
