@@ -8,7 +8,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../components/UI/Spinner/Spinner';
 import {RouteComponentProps} from "react-router-dom";
-import {Ingredient, State} from "../../store/reducers/burgerBuilder";
+import {AppState, Ingredient} from "../../store/actions/actionTypes";
 import axios from "../../axios-orders";
 import withErrorHandler from "../../hoc/withErrorHanlder/withErrorHandler";
 
@@ -105,7 +105,7 @@ class BurgerBuilder extends Component<ChildComponentProps> {
     }
 }
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: AppState) => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,

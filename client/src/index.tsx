@@ -17,6 +17,7 @@ declare global {
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 // @ts-ignore
 const rootReducer = combineReducers({burgerBuilder: burgerBuilderReducer, order: orderReducer});
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

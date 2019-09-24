@@ -1,27 +1,15 @@
 import * as actionTypes from '../actions/actionTypes'
+import {AppState} from '../actions/actionTypes'
 
-export type Ingredient = {
-    salad: number,
-    bacon: number,
-    cheese: number,
-    meat: number
-}
-
-
-export interface State {
-    burgerBuilder: {
-        ingredients: Ingredient | null,
-        totalPrice: number,
-        error: boolean
-    }
-}
-
-const initialState: State = {
+const initialState: AppState = {
     burgerBuilder: {
         ingredients: null,
-        totalPrice: 4,
+        totalPrice: 0,
         error: false
     },
+    ingredients: null,
+    totalPrice: 4,
+    error: false
 };
 
 const INGREDIENT_PRICES = {
@@ -31,7 +19,7 @@ const INGREDIENT_PRICES = {
     bacon: 1.4,
 };
 
-const reducer = (state: State = initialState, action: any) => {
+const reducer = (state: AppState = initialState, action: any) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
             return {

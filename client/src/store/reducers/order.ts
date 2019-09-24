@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes'
-import {Ingredient} from "./burgerBuilder";
+import {Ingredient} from '../actions/actionTypes'
 
 export interface State {
     burgerBuilder: {
