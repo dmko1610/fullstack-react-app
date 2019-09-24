@@ -6,10 +6,7 @@ const initialState: AppState = {
         ingredients: null,
         totalPrice: 0,
         error: false
-    },
-    ingredients: null,
-    totalPrice: 4,
-    error: false
+    }
 };
 
 const INGREDIENT_PRICES = {
@@ -42,7 +39,7 @@ const reducer = (state: AppState = initialState, action: any) => {
         case actionTypes.SET_INGREDIENTS:
             return {
                 ...state,
-                ingredients: action.ingredients,
+                ingredients: action.burgerBuilder.ingredients,
                 error: false
             };
         case actionTypes.FETCH_INGREDIENTS_FAILED:

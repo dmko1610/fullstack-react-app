@@ -20,7 +20,4 @@ export interface AppState {
         totalPrice: number,
         error: boolean
     }
-    ingredients: Ingredient | null,
-    totalPrice: number,
-    error: boolean
 }
