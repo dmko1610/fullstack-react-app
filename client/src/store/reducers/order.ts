@@ -1,22 +1,24 @@
 import * as actionTypes from '../actions/actionTypes'
-import {Ingredient} from '../actions/actionTypes'
 
 export interface State {
-    ingredients: Ingredient | null,
-    totalPrice: number
     orders: [],
     loading: boolean,
+    purchased: boolean
 }
 
 const initialState: State = {
-    ingredients: null,
-    totalPrice: 0,
     orders: [],
     loading: false,
+    purchased: false
 };
 
 const orderReducer = (state: State = initialState, action: any) => {
     switch (action.type) {
+        case actionTypes.PURCHASE_INIT:
+            return {
+                ...state,
+                purchased: false
+            };
         case actionTypes.PURCHASE_BURGER_START:
             return {
                 ...state,
@@ -30,6 +32,7 @@ const orderReducer = (state: State = initialState, action: any) => {
             return {
                 ...state,
                 loading: false,
+                purchased: true,
                 orders: state.orders.concat(newOrder)
             };
         case actionTypes.PURCHASE_BURGER_FAIL:
