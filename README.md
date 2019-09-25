@@ -1,5 +1,5 @@
-# fullstack-react-app
-Fullstack React Application
+# react-burger-app
+Fullstack React Burger Application on TypeScript
 ==
 This is my copy of the Maximilian Schwarzmuller React course.
 Just tryna learn how to write good applications and have some fun.
