@@ -14,10 +14,14 @@ export type Ingredient = {
     meat: number
 }
 
+export type BurgerBuilder = {
+    ingredients: Ingredient | null,
+    totalPrice: number,
+    error: boolean
+}
+
 export interface AppState {
-    burgerBuilder: {
-        ingredients: Ingredient | null,
-        totalPrice: number,
-        error: boolean
-    }
+    ingredients: Ingredient | null,
+    totalPrice: number,
+    error: boolean
 }

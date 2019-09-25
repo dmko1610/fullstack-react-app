@@ -73,7 +73,6 @@ class BurgerBuilder extends Component<ChildComponentProps> {
         let burger = this.props.error
             ? <p>Ingredients can't be loaded</p>
             : <Spinner/>;
-            console.log(this.props.ings)
         if (this.props.ings) {
             burger = (
                 <Auxiliary>
@@ -107,10 +106,8 @@ class BurgerBuilder extends Component<ChildComponentProps> {
 }
 
 const mapStateToProps = (state: AppState) => {
-    return {
-        ings: state.burgerBuilder.ingredients,
-        price: state.burgerBuilder.totalPrice,
-        error: state.burgerBuilder.error
+    // @ts-ignore
+    return {ings: state.burgerBuilder.ingredients, price: state.burgerBuilder.totalPrice, error: state.burgerBuilder.error
     };
 };
 

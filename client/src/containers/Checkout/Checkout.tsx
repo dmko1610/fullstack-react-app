@@ -38,9 +38,8 @@ class Checkout extends Component<ChildComponentProps> {
 }
 
 const mapStateToProps = (state: AppState) => {
-    return {
-        ings: state.burgerBuilder.ingredients
-    }
+    // @ts-ignore
+    return {ings: state.burgerBuilder.ingredients}
 };
 
 // @ts-ignore

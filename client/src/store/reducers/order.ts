@@ -2,29 +2,17 @@ import * as actionTypes from '../actions/actionTypes'
 import {Ingredient} from '../actions/actionTypes'
 
 export interface State {
-    burgerBuilder: {
-        ingredients: Ingredient | null,
-        totalPrice: number
-    },
-    orders: [],
-    order: {
-        loading: boolean,
-    },
-    ingredients: {},
+    ingredients: Ingredient | null,
     totalPrice: number
+    orders: [],
+    loading: boolean,
 }
 
 const initialState: State = {
-    burgerBuilder: {
-        ingredients: null,
-        totalPrice: 0
-    },
+    ingredients: null,
+    totalPrice: 0,
     orders: [],
-    order: {
-        loading: false,
-    },
-    ingredients: {},
-    totalPrice: 0
+    loading: false,
 };
 
 const reducer = (state: State = initialState, action: any) => {

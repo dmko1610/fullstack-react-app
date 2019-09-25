@@ -20,7 +20,9 @@ export const removeIngredient = (name: string) => {
 export const setIngredients = (ingredients: Ingredient) => {
     return {
         type: actionTypes.SET_INGREDIENTS,
-        ingredients: ingredients
+        burgerBuilder: {
+            ingredients: ingredients
+        }
     }
 };
 

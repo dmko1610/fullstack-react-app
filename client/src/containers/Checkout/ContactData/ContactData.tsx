@@ -215,11 +215,8 @@ class ContactData extends Component<ChildComponentProps, IState> {
 }
 
 const mapStateToProps = (state: State) => {
-    return {
-        ings: state.burgerBuilder.ingredients,
-        price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
-    }
+    // @ts-ignore
+    return {ings: state.burgerBuilder.ingredients, price: state.burgerBuilder.totalPrice, loading: state.order.loading}
 };
 
 const mapDispatchToProps = (dispatch: any) => {
