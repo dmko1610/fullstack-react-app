@@ -9,7 +9,6 @@ import {RouteComponentProps} from "react-router";
 import Input from '../../../components/UI/Input/Input';
 import withErrorHandler from "../../../hoc/withErrorHanlder/withErrorHandler";
 import * as actions from '../../../store/actions/index'
-import {State} from "../../../store/reducers/order";
 
 interface ChildComponentProps extends RouteComponentProps<any> {
     ings: {},
@@ -214,9 +213,12 @@ class ContactData extends Component<ChildComponentProps, IState> {
     }
 }
 
-const mapStateToProps = (state: State) => {
-    // @ts-ignore
-    return {ings: state.burgerBuilder.ingredients, price: state.burgerBuilder.totalPrice, loading: state.order.loading}
+const mapStateToProps = (state: any) => {
+    return {
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.order.loading
+    }
 };
 
 const mapDispatchToProps = (dispatch: any) => {

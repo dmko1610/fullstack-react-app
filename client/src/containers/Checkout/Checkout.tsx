@@ -3,7 +3,6 @@ import {Redirect, Route, RouteComponentProps} from 'react-router-dom';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from "./ContactData/ContactData";
 import {connect} from 'react-redux';
-import {AppState} from "../../store/actions/actionTypes";
 
 interface ChildComponentProps extends RouteComponentProps<any> {
     ings: {}
@@ -37,9 +36,10 @@ class Checkout extends Component<ChildComponentProps> {
     }
 }
 
-const mapStateToProps = (state: AppState) => {
-    // @ts-ignore
-    return {ings: state.burgerBuilder.ingredients}
+const mapStateToProps = (state: any) => {
+    return {
+        ings: state.burgerBuilder.ingredients
+    }
 };
 
 // @ts-ignore
