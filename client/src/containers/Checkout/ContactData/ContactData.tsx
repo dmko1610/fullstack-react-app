@@ -14,7 +14,8 @@ interface ChildComponentProps extends RouteComponentProps<any> {
     ings: {},
     price: number,
     onOrderBurger: any,
-    loading: boolean
+    loading: boolean,
+    token: string
 }
 
 interface IState {
@@ -142,7 +143,7 @@ class ContactData extends Component<ChildComponentProps, IState> {
             price: this.props.price,
             orderData: formData
         };
-        this.props.onOrderBurger(order);
+        this.props.onOrderBurger(order, this.props.token);
     };
 
     inputChangedHandler = (event: any, inputIdentifier: string) => {
@@ -208,13 +209,14 @@ const mapStateToProps = (state: any) => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token
     }
 };
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        onOrderBurger: (orderData: {}) => dispatch(actions.purchaseBurger(orderData))
+        onOrderBurger: (orderData: {}, token: string) => dispatch(actions.purchaseBurger(orderData, token))
     }
 };
 

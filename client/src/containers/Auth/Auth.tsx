@@ -4,10 +4,13 @@ import Button from '../../components/UI/Button/Button'
 // @ts-ignore
 import classes from './Auth.css'
 import * as actions from '../../store/actions/index'
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 interface IProps {
-    onAuth: any
+    onAuth: any,
+    loading: boolean,
+    error: any
 }
 
 class AuthComponent extends Component<IProps> {
@@ -95,7 +98,7 @@ class AuthComponent extends Component<IProps> {
                 config: (this.state.controls as any)[key]
             })
         }
-        const form = formElementsArray.map(formElement => (
+        let form: any = formElementsArray.map(formElement => (
             <Input
                 key={formElement.id}
                 elementType={formElement.config.elementType}
@@ -107,8 +110,21 @@ class AuthComponent extends Component<IProps> {
                 changed={(event: any) => this.inputChangedHandler(event, formElement.id)}
             />
         ));
+
+        if (this.props.loading) {
+            form = <Spinner/>
+        }
+
+        let errorMessage = null;
+        if (this.props.error) {
+            errorMessage = (
+                <p>{this.props.error.message}</p>
+            )
+        }
+
         return (
             <div className={classes.Auth}>
+                {errorMessage}
                 <form onSubmit={this.submitHandler}>
                     {form}
                     <Button btnType="Success">
@@ -125,10 +141,17 @@ class AuthComponent extends Component<IProps> {
     }
 }
 
+const mapStateToProps = (state: any) => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error
+    }
+};
+
 const mapDispatchToProps = (dispatch: any) => {
     return {
         onAuth: (email: string, password: string, isSignUp: boolean) => dispatch(actions.auth(email, password, isSignUp))
     }
 };
 
-export const Auth = connect(null, mapDispatchToProps)(AuthComponent);
+export const Auth = connect(mapStateToProps, mapDispatchToProps)(AuthComponent);
