@@ -32,7 +32,7 @@ export const checkAuthTimeout = (expirationTime: number) => {
     return (dispatch: any) => {
         setTimeout(() => {
             dispatch(logout())
-        }, expirationTime)
+        }, expirationTime * 1000)
     }
 };
 
@@ -56,5 +56,12 @@ export const auth = (email: string, password: string, isSignUp: boolean) => {
             .catch(err => {
                 dispatch(authFail(err.response.data.error));
             })
+    }
+};
+
+export const setAuthRedirectPath = (path: string) => {
+    return {
+        type: actionTypes.SET_AUTH_REDIRECT_PATH,
+        path: path
     }
 };
