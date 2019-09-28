@@ -132,7 +132,7 @@ class AuthComponent extends Component<IProps> {
                 <p>{this.props.error.message}</p>
             )
         }
-        let authRedirect: any = null;
+        let authRedirect = null;
         if (this.props.isAuthenticated) {
             authRedirect = <Redirect to={this.props.authRedirectPath}/>;
         }

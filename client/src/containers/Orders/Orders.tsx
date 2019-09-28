@@ -10,13 +10,14 @@ interface IProps {
     onFetchOrders: any,
     orders: any,
     loading: boolean,
-    token: string
+    token: string,
+    userId: string
 }
 
 class Orders extends Component<IProps> {
 
     componentDidMount(): void {
-        this.props.onFetchOrders(this.props.token);
+        this.props.onFetchOrders(this.props.token, this.props.userId);
     }
 
     render() {
@@ -41,13 +42,14 @@ const mapStateToProps = (state: any) => {
     return {
         orders: state.order.orders,
         loading: state.order.loading,
-        token: state.auth.token
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 };
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        onFetchOrders: (token: string) => dispatch(actions.fetchOrders(token))
+        onFetchOrders: (token: string, userId: string) => dispatch(actions.fetchOrders(token, userId))
     }
 };
 

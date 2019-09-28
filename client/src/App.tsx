@@ -28,14 +28,15 @@ class App extends Component<IProps> {
                 <Redirect to="/" />
             </Switch>
         );
-        console.log(this.props.isAuthenticated)
         if (this.props.isAuthenticated) {
             routes = (
                 <Switch>
                     <Route path="/" exact component={BurgerBuilder}/>
                     <Route path="/logout" component={Logout}/>
+                    <Route path="/auth" component={Auth}/>
                     <Route path="/orders" component={Orders}/>
                     <Route path="/checkout" component={Checkout}/>
+                    <Redirect to="/" />
                 </Switch>
             )
         }
