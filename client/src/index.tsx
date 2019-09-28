@@ -17,13 +17,14 @@ declare global {
     }
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
     order: orderReducer,
     auth: authReducer
 });
+// @ts-ignore
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 const app = (
