@@ -14,8 +14,9 @@ const asyncComponent = (importComponent: any) => {
         }
 
         render() {
-            const С = this.state.component;
-            return С ? <C {...this.props}/> : null
+            const C = this.state.component;
+            // @ts-ignore
+            return C ? <C {...this.props}/> : null
         }
     }
 };
