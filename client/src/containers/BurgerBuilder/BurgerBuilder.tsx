@@ -7,8 +7,8 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../components/UI/Spinner/Spinner';
-import {RouteComponentProps} from "react-router-dom";
-import {Ingredient} from "../../store/actions/actionTypes";
+import {RouteComponentProps} from 'react-router-dom';
+import {Ingredient} from '../../store/actions/actionTypes';
 import axios from "../../axios-orders";
 import withErrorHandler from "../../hoc/withErrorHanlder/withErrorHandler";
 
@@ -19,7 +19,9 @@ interface ChildComponentProps extends RouteComponentProps<any> {
     onInitIngredients: any,
     onInitPurchase: any,
     price: number,
-    error: boolean
+    error: boolean,
+    isAuthenticated: boolean,
+    onSetAuthRedirectPath: any
 }
 
 interface IState {
@@ -48,7 +50,12 @@ class BurgerBuilder extends Component<ChildComponentProps> {
     }
 
     purchaseHandler = () => {
-        this.setState({purchasing: true});
+        if (this.props.isAuthenticated) {
+            this.setState({purchasing: true});
+        } else {
+            this.props.onSetAuthRedirectPath('/checkout');
+            this.props.history.push('/auth');
+        }
     };
 
     purchaseCancelHandler = () => {
@@ -85,7 +92,8 @@ class BurgerBuilder extends Component<ChildComponentProps> {
                         disabled={disabledInfo}
                         purchasable={this.updatePurchaseState(this.props.ings)}
                         price={this.props.price}
-                        ordered={this.purchaseHandler}/>
+                        ordered={this.purchaseHandler}
+                        isAuth={this.props.isAuthenticated}/>
                 </Auxiliary>);
             orderSummary = (
                 <OrderSummary
@@ -111,7 +119,8 @@ const mapStateToProps = (state: any) => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        error: state.burgerBuilder.error
+        error: state.burgerBuilder.error,
+        isAuthenticated: state.auth.token != null
     };
 };
 
@@ -120,7 +129,8 @@ const mapDispatchToProps = (dispatch: any) => {
         onIngredientAdded: (ingName: string) => dispatch(actions.addIngredient(ingName)),
         onIngredientRemoved: (ingName: string) => dispatch(actions.removeIngredient(ingName)),
         onInitIngredients: () => dispatch(actions.initIngredients()),
-        onInitPurchase: () => dispatch(actions.purchaseInit())
+        onInitPurchase: () => dispatch(actions.purchaseInit()),
+        onSetAuthRedirectPath: (path: string) => dispatch(actions.setAuthRedirectPath(path))
     }
 };
 

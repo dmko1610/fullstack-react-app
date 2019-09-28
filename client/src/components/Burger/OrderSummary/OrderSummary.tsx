@@ -11,14 +11,9 @@ interface Props {
 }
 
 class OrderSummary extends Component<Props> {
-    componentDidUpdate(): void {
-        console.log('[OrderSummary] did update');
-    }
-
     render() {
         const ingredientSummary = Object.keys(this.props.ingredients)
             .map((igKey: string) => {
-                // @ts-ignore
                 return <li key={igKey}>
                     <span style={{textTransform: 'capitalize'}}>{igKey}</span>
                     :{(this.props.ingredients as any)[igKey]}
