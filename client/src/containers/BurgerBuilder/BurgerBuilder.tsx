@@ -29,7 +29,7 @@ interface IState {
     loading: boolean,
 }
 
-class BurgerBuilder extends Component<ChildComponentProps> {
+export class BurgerBuilder extends Component<ChildComponentProps> {
     state: IState = {
         purchasing: false,
         loading: false,
