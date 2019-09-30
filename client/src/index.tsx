@@ -24,6 +24,7 @@ const rootReducer = combineReducers({
     order: orderReducer,
     auth: authReducer
 });
+
 // @ts-ignore
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 

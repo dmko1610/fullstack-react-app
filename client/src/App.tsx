@@ -3,6 +3,7 @@ import Layout from './containers/Layout/Layout';
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import {Logout} from './containers/Auth/Logout/Logout'
+// import Auth from './containers/Auth/Auth'
 import {connect} from 'react-redux';
 import * as actions from './store/actions/index'
 import asyncComponent from "./hoc/asyncComponent/asyncComponent";

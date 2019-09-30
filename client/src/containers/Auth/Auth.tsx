@@ -19,7 +19,7 @@ interface IProps {
     onSetAuthRedirectPath: any
 }
 
-class AuthComponent extends Component<IProps> {
+class Auth extends Component<IProps> {
     state: any = {
         controls: {
             email: {
@@ -156,4 +156,4 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 };
 
-export const Auth = connect(mapStateToProps, mapDispatchToProps)(AuthComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
