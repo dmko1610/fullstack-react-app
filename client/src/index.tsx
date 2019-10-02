@@ -11,7 +11,7 @@ import orderReducer from "./store/reducers/order";
 import authReducer from './store/reducers/auth';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga'
-import {watchAuth, watchBurgerBuilder} from './store/sagas/index'
+import {watchAuth, watchBurgerBuilder, watchOrder} from './store/sagas/index'
 
 declare global {
     interface Window {
@@ -34,6 +34,7 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, s
 
 sagaMiddleware.run(watchAuth);
 sagaMiddleware.run(watchBurgerBuilder);
+sagaMiddleware.run(watchOrder);
 
 const app = (
     <Provider store={store}>

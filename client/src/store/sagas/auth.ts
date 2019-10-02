@@ -10,7 +10,7 @@ export function* logoutSaga(action: any) {
 }
 
 export function* checkAuthTimeout(action: any) {
-    yield delay(action.expirationTime);
+    yield delay(action.expirationTime * 100);
     yield put(actions.logout());
 }
 

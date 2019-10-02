@@ -1,6 +1,4 @@
 import * as actionTypes from './actionTypes';
-import {Dispatch} from "redux";
-import axios from '../../axios-orders';
 import {AxiosError} from "axios";
 
 export const purchaseBurgerSuccess = (id: number, orderData: {}) => {
@@ -25,8 +23,10 @@ export const purchaseBurgerStart = () => {
 };
 
 export const purchaseBurger = (orderData: {}, token: string) => {
-    return (dispatch: Dispatch) => {
-
+    return {
+        type: actionTypes.PURCHASE_BURGER,
+        orderData: orderData,
+        token: token
     }
 };
 
@@ -58,22 +58,9 @@ export const fetchOrdersStart = () => {
 };
 
 export const fetchOrders = (token: string, userId: string) => {
-    return (dispatch: any) => {
-        dispatch(fetchOrdersStart());
-        const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
-        axios.get('/orders.json' + queryParams)
-            .then(res => {
-                const fetchedOrders = [];
-                for (let key in res.data) {
-                    fetchedOrders.push({
-                        ...res.data[key],
-                        id: key
-                    })
-                }
-                dispatch(fetchOrdersSuccess(fetchedOrders))
-            })
-            .catch(err => {
-                dispatch(fetchOrdersFail(err))
-            })
+    return {
+        type: actionTypes.FETCH_ORDERS,
+        token: token,
+        userId: userId
     }
 };
