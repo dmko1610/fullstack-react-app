@@ -32,7 +32,6 @@ const sagaMiddleware = createSagaMiddleware();
 // @ts-ignore
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, sagaMiddleware)));
 
-// @ts-ignore
 sagaMiddleware.run(watchAuth);
 
 const app = (
