@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 import {Dispatch} from "redux";
 import axios from '../../axios-orders';
-import {AxiosError, AxiosResponse} from "axios";
+import {AxiosError} from "axios";
 
 export const purchaseBurgerSuccess = (id: number, orderData: {}) => {
     return {
@@ -26,14 +26,7 @@ export const purchaseBurgerStart = () => {
 
 export const purchaseBurger = (orderData: {}, token: string) => {
     return (dispatch: Dispatch) => {
-        dispatch(purchaseBurgerStart());
-        axios.post('/orders.json?auth=' + token, orderData)
-            .then((response: AxiosResponse) => {
-                dispatch(purchaseBurgerSuccess(response.data, orderData))
-            })
-            .catch((error: AxiosError) => {
-                dispatch(purchaseBurgerFail(error))
-            });
+
     }
 };
 
