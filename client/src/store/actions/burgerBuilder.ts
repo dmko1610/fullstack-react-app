@@ -1,7 +1,6 @@
 import * as actionTypes from './actionTypes';
 import {Ingredient} from './actionTypes';
 import {Dispatch} from 'redux';
-import axios from "../../axios-orders";
 
 export const addIngredient = (name: string) => {
     return {
@@ -34,12 +33,6 @@ export const fetchIngredientsFailed = () => {
 
 export const initIngredients = () => {
     return (dispatch: Dispatch) => {
-        axios.get('/ingredients.json')
-            .then(response => {
-                dispatch(setIngredients(response.data))
-            })
-            .catch(error => {
-                dispatch(fetchIngredientsFailed())
-            });
+
     }
 };
