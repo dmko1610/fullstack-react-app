@@ -1,6 +1,5 @@
 import * as actionTypes from './actionTypes';
 import {Ingredient} from './actionTypes';
-import {Dispatch} from 'redux';
 
 export const addIngredient = (name: string) => {
     return {
@@ -32,7 +31,7 @@ export const fetchIngredientsFailed = () => {
 };
 
 export const initIngredients = () => {
-    return (dispatch: Dispatch) => {
-
+    return {
+        type: actionTypes.INIT_INGREDIENTS
     }
 };
