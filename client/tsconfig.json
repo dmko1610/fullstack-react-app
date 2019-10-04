@@ -23,6 +23,9 @@
       "@store/*": [
         "store/*"
       ],
+      "@actions/*": [
+        "store/actions/*"
+      ],
       "@hocs": [
         "hoc/*"
       ],
