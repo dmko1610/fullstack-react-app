@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Modal from '../../components/UI/Modal/Modal';
+import modal from '../../components/UI/Modal/Modal';
 import Auxiliary from '../Auxiliary/Auxiliary';
 import {AxiosRequestConfig, AxiosResponse} from "axios";
 
@@ -28,13 +28,13 @@ const withErrorHandler = (WrappedComponent: any, axios: any) => {
 
         return (
             <Auxiliary>
-                <Modal
+                <modal
                     show={error}
                     modalClosed={errorConfirmedHandler}>
                     {error
                         ? (error as any).message
                         : null}
-                </Modal>
+                </modal>
                 <WrappedComponent {...props}/>
             </Auxiliary>
         )

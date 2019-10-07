@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 // @ts-ignore
 import classes from './Modal.css';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
@@ -21,29 +21,24 @@ interface Props {
     children?: React.ReactNode
 }
 
-interface State {
-    error: boolean
-}
+const modal = (props: Props) => {
+    return (
+        <Auxiliary>
+            <Backdrop
+                show={props.show}
+                clicked={props.modalClosed}
+            />
+            <div
+                className={classes.Modal}
+                style={props.show ? styles.show : styles.hide}>
+                {props.children}
+            </div>
+        </Auxiliary>
+    );
+};
 
-class Modal extends Component<Props, State> {
-    shouldComponentUpdate(nextProps: Props, nextState: State) {
-        return nextProps.show !== this.props.show || nextProps.children !== this.props.children
-    }
-    render() {
-        return (
-            <Auxiliary>
-                <Backdrop
-                    show={this.props.show}
-                    clicked={this.props.modalClosed}
-                />
-                <div
-                    className={classes.Modal}
-                    style={this.props.show ? styles.show : styles.hide}>
-                    {this.props.children}
-                </div>
-            </Auxiliary>
-        );
-    }
-}
-
-export default Modal;
+export default React.memo(
+    modal,
+    (prevProps, nextProps) =>
+        nextProps.show === prevProps.show &&
+        nextProps.children === prevProps.children);
