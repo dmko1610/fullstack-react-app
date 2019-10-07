@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import * as actions from '../../../store/actions/index'
 import {RouteComponentProps} from 'react-router';
 import {Redirect} from 'react-router-dom'
@@ -8,15 +8,13 @@ interface ChildComponentProps extends RouteComponentProps<any> {
     onLogout: any
 }
 
-class LogoutComponent extends Component<ChildComponentProps> {
-    componentDidMount(): void {
-        this.props.onLogout()
-    }
+const LogoutComponent = (props: ChildComponentProps) => {
+    useEffect(() => {
+        props.onLogout()
+    }, []);
 
-    render () {
-        return <Redirect to="/"/>
-    }
-}
+    return <Redirect to="/"/>
+};
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
