@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 // @ts-ignore
 import classes from './Layout.css';
@@ -6,46 +6,32 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import {connect} from "react-redux";
 
-interface State {
-    showSideDrawer: boolean
-}
+const Layout = (props: any) => {
+    const [sideDrawerIsVisible, setSideDrawerIsVisible] = useState(false);
 
-interface IProps {
-    isAuthenticated: boolean
-}
-
-class Layout extends Component<IProps> {
-    state: State = {
-        showSideDrawer: false
+    const sideDrawerClosedHandler = () => {
+        setSideDrawerIsVisible(false)
     };
 
-    sideDrawerClosedHandler = () => {
-        this.setState({showSideDrawer: false});
+    const sideDrawerToggleHandler = () => {
+        setSideDrawerIsVisible(!sideDrawerIsVisible)
     };
 
-    sideDrawerToggleHandler = () => {
-        this.setState((prevState: State) => {
-            return {showSideDrawer: !prevState.showSideDrawer}
-        });
-    };
-
-    render() {
-        return (
-            <Auxiliary>
-                <Toolbar
-                    isAuth={this.props.isAuthenticated}
-                    drawerToggleClicked={this.sideDrawerToggleHandler}/>
-                <SideDrawer
-                    isAuth={this.props.isAuthenticated}
-                    open={this.state.showSideDrawer}
-                    closed={this.sideDrawerClosedHandler}/>
-                <main className={classes.Content}>
-                    {this.props.children}
-                </main>
-            </Auxiliary>
-        );
-    }
-}
+    return (
+        <Auxiliary>
+            <Toolbar
+                isAuth={props.isAuthenticated}
+                drawerToggleClicked={sideDrawerToggleHandler}/>
+            <SideDrawer
+                isAuth={props.isAuthenticated}
+                open={sideDrawerIsVisible}
+                closed={sideDrawerClosedHandler}/>
+            <main className={classes.Content}>
+                {props.children}
+            </main>
+        </Auxiliary>
+    );
+};
 
 const mapStateToProps = (state: any) => {
     return {

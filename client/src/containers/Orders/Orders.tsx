@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useEffect} from "react";
 import Order from '../../components/Order/Order';
 import axios from '../../axios-orders';
 import withErrorHandler from "../../hoc/withErrorHanlder/withErrorHandler";
@@ -14,29 +14,27 @@ interface IProps {
     userId: string
 }
 
-class Orders extends Component<IProps> {
+const Orders = (props: IProps) => {
 
-    componentDidMount(): void {
-        this.props.onFetchOrders(this.props.token, this.props.userId);
-    }
+    useEffect(() => {
+        props.onFetchOrders(props.token, props.userId);
+    }, []);
 
-    render() {
-        let orders: any = <Spinner/>;
-        if (!this.props.loading) {
-            orders = this.props.orders.map((order: any) => (
-                <Order
-                    key={order.id}
-                    ingredients={order.ingredients}
-                    price={+order.price}/>
-            ))
-        }
-        return (
-            <div>
-                {orders}
-            </div>
-        );
+    let orders: any = <Spinner/>;
+    if (!props.loading) {
+        orders = props.orders.map((order: any) => (
+            <Order
+                key={order.id}
+                ingredients={order.ingredients}
+                price={+order.price}/>
+        ))
     }
-}
+    return (
+        <div>
+            {orders}
+        </div>
+    );
+};
 
 const mapStateToProps = (state: any) => {
     return {
