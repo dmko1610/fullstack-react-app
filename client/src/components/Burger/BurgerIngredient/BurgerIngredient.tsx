@@ -34,6 +34,20 @@ class BurgerIngredient extends Component<Props> {
             case ('salad'):
                 ingredient = <div className={classes.Salad}/>;
                 break;
+            case ('bbq-sauce'):
+                ingredient = <div className={classes.BbqSauce}/>;
+                break;
+            case ('white-sauce'):
+                ingredient = <div className={classes.WhiteSauce}/>;
+                break;
+            case ('onion'):
+                ingredient = (
+                    <div className={classes.Onion}>
+                        <div className={classes.Onion1}/>
+                        <div className={classes.Onion2}/>
+                    </div>
+                );
+                break;
             default:
                 ingredient = null;
         }

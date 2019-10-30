@@ -14,6 +14,7 @@ const INGREDIENT_PRICES = {
     cheese: 0.4,
     meat: 2,
     bacon: 1.4,
+    onion: 0.3
 };
 
 const addIngredient = (state: AppState, action: any) => {
